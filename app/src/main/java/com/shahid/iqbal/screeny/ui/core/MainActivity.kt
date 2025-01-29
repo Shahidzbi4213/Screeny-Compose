@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        super.onCreate(savedInstanceState)
 
         setContent {
             val userPreference by settingViewModel.userPreference.collectAsStateWithLifecycle()
