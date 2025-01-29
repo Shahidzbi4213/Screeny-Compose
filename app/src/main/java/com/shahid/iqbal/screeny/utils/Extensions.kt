@@ -45,7 +45,7 @@ object Extensions {
 
     @Composable
     fun Pulsating(pulseFraction: Float = 1.2f, content: @Composable () -> Unit) {
-        val infiniteTransition = rememberInfiniteTransition()
+        val infiniteTransition = rememberInfiniteTransition(label = "Pulsating Transition")
 
         val scale by infiniteTransition.animateFloat(
             initialValue = 1f,
@@ -53,7 +53,7 @@ object Extensions {
             animationSpec = infiniteRepeatable(
                 animation = tween(1000),
                 repeatMode = RepeatMode.Reverse
-            )
+            ), label = "Pulsating Animation"
         )
 
         Box(modifier = Modifier.scale(scale)) {
