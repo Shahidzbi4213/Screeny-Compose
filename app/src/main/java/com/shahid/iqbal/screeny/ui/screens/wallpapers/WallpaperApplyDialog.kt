@@ -48,7 +48,7 @@ fun WallpaperApplyDialog(wallpaper: Drawable?, onDismissRequest: () -> Unit) {
 
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
-        modifier = Modifier.safeDrawingPadding()
+        modifier = Modifier
 
     ) {
 

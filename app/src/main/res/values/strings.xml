@@ -32,5 +32,11 @@
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="categories">Categories</string>
+    <string name="selected_language">Selected Language</string>
+    <string name="others">Others</string>
+    <string name="share_app">Share App</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="feedback">Feedback</string>
+    <string name="privacy_policy">Privacy Policy</string>
 
 </resources>

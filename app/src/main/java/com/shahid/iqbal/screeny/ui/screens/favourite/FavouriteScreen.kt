@@ -36,9 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.ImageLoader
+import coil.compose.AsyncImage
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.ui.routs.Routs
 import com.shahid.iqbal.screeny.ui.utils.NoRippleInteractionSource
+import com.shahid.iqbal.screeny.utils.Extensions.Pulsating
+import com.shahid.iqbal.screeny.utils.Extensions.mirror
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -91,11 +94,12 @@ fun NoFavouritePlaceholder(onExplore: () -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.no_favourite_found),
+        AsyncImage(
+            model =  R.drawable.no_favourite_found,
             contentDescription = null,
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant),
-            modifier = Modifier.size(80.dp)
+            modifier = Modifier.mirror().size(80.dp),
+
         )
 
         Text(
@@ -108,13 +112,15 @@ fun NoFavouritePlaceholder(onExplore: () -> Unit) {
                 .padding(vertical = 20.dp)
         )
 
-        Button(
-            onClick = onExplore,
-            modifier = Modifier.padding(top = 16.dp),
-            interactionSource = NoRippleInteractionSource()
-        ) {
-            Text(text = stringResource(R.string.explore_wallpapers))
-        }
+       Pulsating {
+           Button(
+               onClick = onExplore,
+               modifier = Modifier.padding(top = 16.dp),
+               interactionSource = NoRippleInteractionSource()
+           ) {
+               Text(text = stringResource(R.string.explore_wallpapers))
+           }
+       }
     }
 }
 

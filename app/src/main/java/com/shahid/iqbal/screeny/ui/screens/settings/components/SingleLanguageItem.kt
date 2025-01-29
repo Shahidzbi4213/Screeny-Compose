@@ -1,4 +1,4 @@
-package com.shahid.iqbal.screeny.ui.screens.settings.language
+package com.shahid.iqbal.screeny.ui.screens.settings.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.LanguageEntity
 import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.noRippleClickable
+import com.shahid.iqbal.screeny.ui.utils.NoRippleInteractionSource
 
 @Composable
 fun SingleLanguageItem(
@@ -62,10 +63,13 @@ fun SingleLanguageItem(
         )
 
         RadioButton(
-            selected = isSelected, onClick = null, enabled = false, colors = RadioButtonDefaults.colors(
+            selected = isSelected, onClick = null, enabled = false,
+            colors = RadioButtonDefaults.colors(
                 disabledUnselectedColor = RadioButtonDefaults.colors().unselectedColor,
-                disabledSelectedColor = RadioButtonDefaults.colors().selectedColor
-            )
+                disabledSelectedColor = RadioButtonDefaults.colors().selectedColor,
+                selectedColor = Color.White
+            ),
+            interactionSource = NoRippleInteractionSource()
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.shahid.iqbal.screeny.ui.screens.settings.language
+package com.shahid.iqbal.screeny.ui.screens.settings.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

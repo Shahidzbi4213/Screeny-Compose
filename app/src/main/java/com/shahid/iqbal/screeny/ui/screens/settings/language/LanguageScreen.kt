@@ -27,10 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.shahid.iqbal.screeny.R
+import com.shahid.iqbal.screeny.ui.screens.settings.components.SingleLanguageItem
+import com.shahid.iqbal.screeny.ui.screens.settings.components.Toolbar
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.LANGUAGES_LIST
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.LanguageEntity
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.setUserSelectedLanguageForApp
@@ -56,6 +59,7 @@ fun LanguageScreen(
         modifier = modifier
             .fillMaxSize()
             .safeDrawingPadding(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
 
@@ -63,7 +67,7 @@ fun LanguageScreen(
             onBackPress = { navController.navigateUp() },
             isApplyEnable = localSelected != null,
             onApply = {
-                setUserSelectedLanguageForApp(context,localSelected!!.languageCode)
+                setUserSelectedLanguageForApp(context, localSelected!!.languageCode)
                 languageViewModel.updateCurrentLanguage(localSelected!!)
                 navController.navigateUp()
             }
@@ -73,19 +77,23 @@ fun LanguageScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         Text(
-            stringResource(id = R.string.system_default),
+            stringResource(id = R.string.selected_language),
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            textAlign = TextAlign.Start,
         )
         SingleLanguageItem(
             modifier = Modifier
                 .height(40.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
+                .fillMaxWidth(0.95f),
             currentSelected,
-            isSelected = true,
-            canApplyBg = false,
-            onClick = {})
+            isSelected = localSelected == null,
+            canApplyBg = true,
+            onClick = {
+                localSelected = null
+            })
 
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -93,7 +101,10 @@ fun LanguageScreen(
             stringResource(id = R.string.all_languages),
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
             fontFamily = screenyFontFamily,
-            modifier = Modifier.padding(horizontal = 10.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
+            textAlign = TextAlign.Start,
         )
         Spacer(modifier = Modifier.height(10.dp))
         CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
@@ -103,8 +114,13 @@ fun LanguageScreen(
                 contentPadding = PaddingValues(), state = state
             ) {
                 items(LANGUAGES_LIST.filter { it != currentSelected }, key = { it.languageName }) { language ->
-                    SingleLanguageItem(language = language, isSelected = (language == localSelected),
-                        onClick = { selectedLanguage -> localSelected = selectedLanguage })
+                    SingleLanguageItem(
+                        language = language, isSelected = (language == localSelected),
+                        onClick = { selectedLanguage -> localSelected = selectedLanguage },
+                        modifier = Modifier
+                            .fillMaxWidth(0.95f)
+                            .height(40.dp)
+                    )
                 }
             }
         }
