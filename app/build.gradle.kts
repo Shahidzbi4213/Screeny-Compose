@@ -41,9 +41,11 @@ android {
         val apiKey = prop.getProperty("api_key")
         buildConfigField("String", "API_KEY", apiKey)
 
-        resourceConfigurations += mutableSetOf( "en", "ar", "ru", "in", "bn", "hi", "uk", "vi", "ko", "ja", "zh", "sv",
-            "pl", "ms", "fr", "it", "fa", "tr", "th", "pt", "es", "de",
-            "nl", "ta", "cs", "ur")
+        androidResources {
+            localeFilters += mutableSetOf( "en", "ar", "ru", "in", "bn", "hi", "uk", "vi", "ko", "ja", "zh", "sv",
+                "pl", "ms", "fr", "it", "fa", "tr", "th", "pt", "es", "de",
+                "nl", "ta", "cs", "ur")
+        }
 
     }
 

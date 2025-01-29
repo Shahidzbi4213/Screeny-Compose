@@ -9,6 +9,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.core.os.LocaleListCompat
+import com.shahid.iqbal.screeny.utils.Extensions.debug
 import java.util.Locale
 
 
@@ -26,10 +27,14 @@ fun findLanguageByCode(code: String): LanguageEntity {
 }
 
 fun setUserSelectedLanguageForApp(context: Context, languageCode: String) {
+
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         context.getSystemService(LocaleManager::class.java).applicationLocales =
             LocaleList.forLanguageTags(languageCode)
     } else {
+
+
         AppCompatDelegate.setApplicationLocales(
             LocaleListCompat.forLanguageTags(languageCode)
         )
