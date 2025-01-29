@@ -32,4 +32,6 @@
     <string name="system_default">Lalai Sistem</string>
     <string name="dark">Gelap</string>
     <string name="light">Cahaya</string>
+    <string name="categories">Kategori</string>
+
 </resources>

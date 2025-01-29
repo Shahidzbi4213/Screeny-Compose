@@ -32,4 +32,6 @@
     <string name="system_default">Bawaan Sistem</string>
     <string name="dark">Gelap</string>
     <string name="light">Lampu</string>
+    <string name="categories">Kategori</string>
+
 </resources>

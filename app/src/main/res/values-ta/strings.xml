@@ -32,4 +32,6 @@
     <string name="system_default">கணினி இயல்புநிலை</string>
     <string name="dark">இருள்</string>
     <string name="light">ஒளி</string>
+    <string name="categories">வகைகள்</string>
+
 </resources>

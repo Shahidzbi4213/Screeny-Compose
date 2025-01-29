@@ -32,4 +32,6 @@
     <string name="system_default">Domyślne systemowe</string>
     <string name="dark">Ciemny</string>
     <string name="light">Światło</string>
+    <string name="categories">Kategorie</string>
+
 </resources>

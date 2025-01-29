@@ -32,4 +32,5 @@
     <string name="system_default">Sistem Varsayılanı</string>
     <string name="dark">Karanlık</string>
     <string name="light">Işık</string>
+    <string name="categories">Kategoriler</string>
 </resources>

@@ -32,4 +32,6 @@
     <string name="system_default">Implicit sistem</string>
     <string name="dark">Întuneric</string>
     <string name="light">Aprinde</string>
+    <string name="categories">Categorii</string>
+
 </resources>

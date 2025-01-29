@@ -32,4 +32,6 @@
     <string name="system_default">システムのデフォルト</string>
     <string name="dark">暗い</string>
     <string name="light">ライト</string>
+    <string name="categories">カテゴリー</string>
+
 </resources>

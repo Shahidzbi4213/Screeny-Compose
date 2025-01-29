@@ -32,4 +32,5 @@
     <string name="system_default">সিস্টেম ডিফল্ট</string>
     <string name="dark">অন্ধকার</string>
     <string name="light">আলো</string>
+    <string name="categories">ক্যাটাগরি</string>
 </resources>

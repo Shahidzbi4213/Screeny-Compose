@@ -32,4 +32,5 @@
     <string name="system_default">系统默认值</string>
     <string name="dark">黑暗的</string>
     <string name="light">光</string>
+    <string name="categories">类别</string>
 </resources>

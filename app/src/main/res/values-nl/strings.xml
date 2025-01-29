@@ -32,4 +32,6 @@
     <string name="system_default">Systeemstandaard</string>
     <string name="dark">Donker</string>
     <string name="light">Licht</string>
+    <string name="categories">Categorieën</string>
+
 </resources>

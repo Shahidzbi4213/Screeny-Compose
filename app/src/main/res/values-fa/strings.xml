@@ -32,4 +32,6 @@
     <string name="system_default">پیش فرض سیستم</string>
     <string name="dark">تاریک</string>
     <string name="light">نور</string>
+    <string name="categories">دسته بندی ها</string>
+
 </resources>

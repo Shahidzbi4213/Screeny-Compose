@@ -32,4 +32,6 @@
     <string name="system_default">Система по умолчанию</string>
     <string name="dark">Темный</string>
     <string name="light">Свет</string>
+    <string name="categories">Категории</string>
+
 </resources>

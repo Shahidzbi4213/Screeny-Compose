@@ -32,4 +32,6 @@
     <string name="system_default">Padrão do sistema</string>
     <string name="dark">Escuro</string>
     <string name="light">Luz</string>
+    <string name="categories">Categorias</string>
+
 </resources>

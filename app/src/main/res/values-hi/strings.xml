@@ -32,4 +32,6 @@
     <string name="system_default">प्रणालीगत चूक</string>
     <string name="dark">अँधेरा</string>
     <string name="light">रोशनी</string>
+    <string name="categories">श्रेणियाँ</string>
+
 </resources>

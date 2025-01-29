@@ -32,4 +32,6 @@
     <string name="system_default">시스템 기본값</string>
     <string name="dark">어두운</string>
     <string name="light">빛</string>
+    <string name="categories">카테고리</string>
+
 </resources>

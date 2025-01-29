@@ -31,4 +31,6 @@
     <string name="system_default">System Default</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
+    <string name="categories">Categories</string>
+
 </resources>
