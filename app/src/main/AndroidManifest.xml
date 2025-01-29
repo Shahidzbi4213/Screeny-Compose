@@ -19,9 +19,10 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:localeConfig="@xml/locales_config"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/Theme.Screeny"
         tools:ignore="UnusedAttribute"
         tools:targetApi="31">
@@ -46,7 +47,6 @@
                 android:name="autoStoreLocales"
                 android:value="true" />
         </service>
-
     </application>
 
 </manifest>

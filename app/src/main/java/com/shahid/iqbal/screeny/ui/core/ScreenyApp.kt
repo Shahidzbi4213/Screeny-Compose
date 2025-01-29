@@ -55,6 +55,7 @@ import com.shahid.iqbal.screeny.ui.screens.settings.language.LanguageScreen
 import com.shahid.iqbal.screeny.ui.screens.splash.SplashScreen
 import com.shahid.iqbal.screeny.ui.screens.wallpapers.WallpaperDetailScreen
 import com.shahid.iqbal.screeny.ui.shared.SharedWallpaperViewModel
+import com.shahid.iqbal.screeny.utils.Extensions.debug
 import org.koin.androidx.compose.koinViewModel
 import kotlin.system.exitProcess
 
@@ -92,7 +93,8 @@ fun ScreenyApp() {
         topBar = {
             if (canShowTopBar) {
 
-                val title = stackEntry?.destination?.route?.substringAfterLast(".") ?: stringResource(id = R.string.app_name)
+
+                val title= titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
                 TopBar(title = title) { navController.navigate(Routs.SearchedWallpaper) }
             }
         },

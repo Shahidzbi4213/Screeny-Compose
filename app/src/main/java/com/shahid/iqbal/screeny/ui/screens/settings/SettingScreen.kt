@@ -57,7 +57,7 @@ fun SettingScreen(
 
             Spacer(Modifier.height(10.dp))
 
-            GeneralItem(title = R.string.app_lanuage, description = if (userPreference.languageCode == Locale.getDefault().language)
+            GeneralItem(title = R.string.app_lanuage, description = if (Locale.getDefault().language.contains(userPreference.languageCode))
                 stringResource(R.string.system_default) else findLanguageByCode(userPreference.languageCode).languageName, icon = R.drawable.language_icon,
                 onClick = {
                     navController.navigate(Routs.Language)

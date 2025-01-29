@@ -63,10 +63,6 @@ fun LanguageScreen(
             onBackPress = { navController.navigateUp() },
             isApplyEnable = localSelected != null,
             onApply = {
-
-                if (localSelected == null)
-                    return@Toolbar
-
                 setUserSelectedLanguageForApp(context,localSelected!!.languageCode)
                 languageViewModel.updateCurrentLanguage(localSelected!!)
                 navController.navigateUp()
