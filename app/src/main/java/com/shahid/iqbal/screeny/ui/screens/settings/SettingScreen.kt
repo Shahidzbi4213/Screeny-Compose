@@ -50,9 +50,11 @@ fun SettingScreen(
         ) {
 
             Text(
-                text = stringResource(R.string.general), maxLines = 1, style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold), modifier = Modifier
+                text = stringResource(R.string.general), maxLines = 1,
+                style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold), modifier = Modifier
                     .fillMaxWidth(0.95f)
-                    .wrapContentHeight(), textAlign = TextAlign.Start
+                    .wrapContentHeight(),
+                textAlign = TextAlign.Start
             )
 
             Spacer(Modifier.height(10.dp))

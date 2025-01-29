@@ -32,5 +32,6 @@
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="categories">Categories</string>
+    <string name="selected_language">Selected Language</string>
 
 </resources>

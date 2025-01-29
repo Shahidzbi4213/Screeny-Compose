@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.shahid.iqbal.screeny.ui.theme.screenyFontFamily
 import com.shahid.iqbal.screeny.ui.utils.NoRippleInteractionSource
+import com.shahid.iqbal.screeny.utils.Extensions.mirror
 
 /**
  * Created by Shahid Iqbal on 28/1/25.
@@ -79,7 +80,7 @@ fun GeneralItem(
                 Spacer(modifier = Modifier.width(10.dp))
 
                 Icon(
-                    imageVector = Icons.Default.KeyboardArrowUp, contentDescription = null, modifier = Modifier.rotate(90f)
+                    imageVector = Icons.Default.KeyboardArrowUp, contentDescription = null, modifier = Modifier.mirror().rotate(90f)
                 )
             }
         }
