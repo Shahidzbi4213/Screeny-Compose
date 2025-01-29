@@ -1,7 +1,7 @@
 package com.shahid.iqbal.screeny.data.local.converter
 
 import androidx.room.TypeConverter
-import com.shahid.iqbal.screeny.ui.screens.settings.language.utils.AppMode
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
 
 class AppModeConverter {
 

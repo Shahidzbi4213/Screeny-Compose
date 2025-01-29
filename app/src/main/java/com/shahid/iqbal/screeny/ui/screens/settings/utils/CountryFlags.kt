@@ -1,4 +1,4 @@
-package com.shahid.iqbal.screeny.ui.screens.settings.language.utils
+package com.shahid.iqbal.screeny.ui.screens.settings.utils
 
 object CountryFlags {
     private val countryFlags by lazy {

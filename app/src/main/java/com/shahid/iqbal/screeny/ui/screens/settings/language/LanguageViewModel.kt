@@ -3,12 +3,15 @@ package com.shahid.iqbal.screeny.ui.screens.settings.language
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shahid.iqbal.screeny.data.repositories.UserPreferenceRepo
-import com.shahid.iqbal.screeny.ui.screens.settings.language.utils.LANGUAGES_LIST
-import com.shahid.iqbal.screeny.ui.screens.settings.language.utils.LanguageEntity
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.LANGUAGES_LIST
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.LanguageEntity
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.setUserSelectedLanguageForApp
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LanguageViewModel(private val userPreferenceRepo: UserPreferenceRepo) : ViewModel() {
 
@@ -28,7 +31,8 @@ class LanguageViewModel(private val userPreferenceRepo: UserPreferenceRepo) : Vi
 
     fun updateCurrentLanguage(languageEntity: LanguageEntity) {
         viewModelScope.launch {
-            userPreferenceRepo.updateAppLanguage(languageEntity)
+
+            withContext(NonCancellable) { userPreferenceRepo.updateAppLanguage(languageEntity) }
         }
     }
 }

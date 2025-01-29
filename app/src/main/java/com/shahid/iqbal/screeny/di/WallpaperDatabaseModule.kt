@@ -6,7 +6,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.shahid.iqbal.screeny.data.local.database.PexelWallpaperDatabase
 import com.shahid.iqbal.screeny.data.utils.Constant
 import com.shahid.iqbal.screeny.models.UserPreference
-import com.shahid.iqbal.screeny.ui.screens.settings.language.utils.AppMode
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,21 +24,7 @@ val wallpaperDatabaseModule = module {
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     CoroutineScope(Dispatchers.IO).launch {
-                        addDefaultUserPreference()
-                    }
-                }
-
-                private suspend fun addDefaultUserPreference() {
-                    withContext(Dispatchers.IO) {
-                        val userPreference = UserPreference(
-                            appMode = AppMode.DEFAULT,
-                            shouldShowDynamicColor = true,
-                            languageCode = Locale.getDefault().language
-                        )
-
-                        get<PexelWallpaperDatabase>()
-                            .userPreferenceDao()
-                            .addUserPreference(userPreference)
+                      db.execSQL("INSERT INTO user_preference (id, languageCode, appMode, shouldShowDynamicColor) VALUES (1, 'en', 0, 1)")
                     }
                 }
             })

@@ -1,4 +1,4 @@
-package com.shahid.iqbal.screeny.ui.screens.settings.language.utils
+package com.shahid.iqbal.screeny.ui.screens.settings.utils
 
 import androidx.compose.runtime.Immutable
 

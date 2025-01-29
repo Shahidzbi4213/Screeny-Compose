@@ -1,11 +1,10 @@
 package com.shahid.iqbal.screeny.models
 
-import android.content.res.Resources.Theme
 import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.shahid.iqbal.screeny.ui.screens.settings.language.utils.AppMode
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
 
 @Keep
 @Entity("user_preference")

@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.shahid.iqbal.screeny.models.UserPreference
-import com.shahid.iqbal.screeny.ui.screens.settings.language.utils.AppMode
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
 import kotlinx.coroutines.flow.Flow
 
 @Dao

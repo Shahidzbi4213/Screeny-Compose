@@ -1,8 +1,8 @@
 package com.shahid.iqbal.screeny.data.repositories
 
 import com.shahid.iqbal.screeny.data.local.dao.UserPreferenceDao
-import com.shahid.iqbal.screeny.ui.screens.settings.language.utils.AppMode
-import com.shahid.iqbal.screeny.ui.screens.settings.language.utils.LanguageEntity
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.LanguageEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
