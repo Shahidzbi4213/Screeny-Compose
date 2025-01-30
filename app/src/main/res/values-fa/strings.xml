@@ -33,5 +33,15 @@
     <string name="dark">تاریک</string>
     <string name="light">نور</string>
     <string name="categories">دسته بندی ها</string>
+    <string name="selected_language">زبان انتخاب شده</string>
+    <string name="others">دیگران</string>
+    <string name="share_app">اشتراک گذاری برنامه</string>
+    <string name="rate_us">به ما امتیاز دهید</string>
+    <string name="feedback">بازخورد</string>
+    <string name="privacy_policy">سیاست حفظ حریم خصوصی</string>
+    <string name="ok">باشه</string>
+    <string name="adaptive_colors">رنگ های تطبیقی</string>
+    <string name="personalize_your_experience">تجربه خود را شخصی کنید!</string>
+    <string name="match_colors_to_your_wallpaper">رنگ ها را با کاغذ دیواری خود مطابقت دهید!</string>
 
 </resources>

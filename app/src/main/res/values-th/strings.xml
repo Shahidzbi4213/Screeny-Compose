@@ -33,4 +33,14 @@
     <string name="dark">มืด</string>
     <string name="light">แสงสว่าง</string>
     <string name="categories">หมวดหมู่</string>
+    <string name="selected_language">ภาษาที่เลือก</string>
+    <string name="others">คนอื่น</string>
+    <string name="share_app">แชร์แอป</string>
+    <string name="rate_us">ให้คะแนนเรา</string>
+    <string name="feedback">ข้อเสนอแนะ</string>
+    <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="ok">ตกลง</string>
+    <string name="adaptive_colors">สีที่ปรับเปลี่ยนได้</string>
+    <string name="personalize_your_experience">ปรับแต่งประสบการณ์ของคุณ!</string>
+    <string name="match_colors_to_your_wallpaper">จับคู่สีกับวอลเปเปอร์ของคุณ!</string>
 </resources>

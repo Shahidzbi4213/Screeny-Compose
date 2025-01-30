@@ -33,5 +33,15 @@
     <string name="dark">暗い</string>
     <string name="light">ライト</string>
     <string name="categories">カテゴリー</string>
+    <string name="selected_language">選択した言語</string>
+    <string name="others">その他</string>
+    <string name="share_app">アプリを共有する</string>
+    <string name="rate_us">評価してください</string>
+    <string name="feedback">フィードバック</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="ok">わかりました</string>
+    <string name="adaptive_colors">アダプティブカラー</string>
+    <string name="personalize_your_experience">あなたのエクスペリエンスをパーソナライズしましょう!</string>
+    <string name="match_colors_to_your_wallpaper">壁紙に合わせて色を合わせましょう！</string>
 
 </resources>

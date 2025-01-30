@@ -33,4 +33,14 @@
     <string name="dark">مظلم</string>
     <string name="light">ضوء</string>
     <string name="categories">فئات</string>
+    <string name="selected_language">اللغة المختارة</string>
+    <string name="others">آحرون</string>
+    <string name="share_app">مشاركة التطبيق</string>
+    <string name="rate_us">قيمنا</string>
+    <string name="feedback">تعليق</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="ok">نعم</string>
+    <string name="adaptive_colors">الألوان التكيفية</string>
+    <string name="personalize_your_experience">إضفاء الطابع الشخصي على تجربتك!</string>
+    <string name="match_colors_to_your_wallpaper">تطابق الألوان مع ورق الحائط الخاص بك!</string>
 </resources>

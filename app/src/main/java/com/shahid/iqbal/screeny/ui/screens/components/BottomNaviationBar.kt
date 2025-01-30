@@ -1,6 +1,7 @@
 package com.shahid.iqbal.screeny.ui.screens.components
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,9 +19,11 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,19 +34,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.shahid.iqbal.screeny.ui.routs.IconType
 import com.shahid.iqbal.screeny.ui.routs.bottomNavigationItems
+
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-
-    MaterialTheme.colorScheme
 
     NavigationBar(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
 
-    ) {
+        ) {
         bottomNavigationItems.forEach { bottomNavItem ->
             val isSelected = currentDestination?.hierarchy?.any { it.route == bottomNavItem.route::class.qualifiedName } == true
 
@@ -70,6 +72,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                                 contentDescription = stringResource(id = bottomNavItem.name),
                             )
                         }
+
                         is IconType.Vector -> {
                             Icon(
                                 imageVector = if (isSelected && bottomNavItem.selectedIcon is IconType.Vector)
@@ -81,6 +84,10 @@ fun BottomNavigationBar(navController: NavHostController) {
                     }
                 },
                 alwaysShowLabel = false,
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else Color.Transparent
+                ),
+                interactionSource = remember { MutableInteractionSource() }, // Enables Material 3 ripple effect
             )
         }
     }

@@ -33,4 +33,14 @@
     <string name="dark">Karanlık</string>
     <string name="light">Işık</string>
     <string name="categories">Kategoriler</string>
+    <string name="selected_language">Seçilen Dil</string>
+    <string name="others">Diğerleri</string>
+    <string name="share_app">Uygulamayı Paylaş</string>
+    <string name="rate_us">Bizi Değerlendirin</string>
+    <string name="feedback">Geri bildirim</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="ok">TAMAM</string>
+    <string name="adaptive_colors">Uyarlanabilir Renkler</string>
+    <string name="personalize_your_experience">Deneyiminizi Kişiselleştirin!</string>
+    <string name="match_colors_to_your_wallpaper">Renkleri Duvar Kağıdınızla Eşleştirin!</string>
 </resources>

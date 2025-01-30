@@ -33,4 +33,14 @@
     <string name="dark">اندھیرا</string>
     <string name="light">روشنی</string>
     <string name="categories">زمرے</string>
+    <string name="selected_language">منتخب کردہ زبان</string>
+    <string name="others">دوسرے</string>
+    <string name="share_app">ایپ شیئر کریں۔</string>
+    <string name="rate_us">ہمیں درجہ دیں۔</string>
+    <string name="feedback">تاثرات</string>
+    <string name="privacy_policy">رازداری کی پالیسی</string>
+    <string name="ok">ٹھیک ہے</string>
+    <string name="adaptive_colors">انکولی رنگ</string>
+    <string name="personalize_your_experience">اپنے تجربے کو ذاتی بنائیں!</string>
+    <string name="match_colors_to_your_wallpaper">اپنے وال پیپر سے رنگوں کو ملائیں!</string>
 </resources>

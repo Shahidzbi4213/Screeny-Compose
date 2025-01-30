@@ -1,8 +1,10 @@
 package com.shahid.iqbal.screeny.ui.core
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -78,18 +80,14 @@ fun ScreenyApp() {
     )
 
 
-    Scaffold(
-        bottomBar = { if (canShowBottomBar) BottomNavigationBar(navController) },
-        topBar = {
-            if (canShowTopBar) {
+    Scaffold(bottomBar = { if (canShowBottomBar) BottomNavigationBar(navController) }, topBar = {
+        if (canShowTopBar) {
 
 
-                val title= titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
-                TopBar(title = title) { navController.navigate(Routs.SearchedWallpaper) }
-            }
-        },
-        modifier = Modifier
-            .fillMaxSize(),
+            val title = titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
+            TopBar(title = title) { navController.navigate(Routs.SearchedWallpaper) }
+        }
+    }, modifier = Modifier.fillMaxSize(),
 
         contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
@@ -98,6 +96,10 @@ fun ScreenyApp() {
 
             NavHost(
                 navController = navController, startDestination = Splash,
+                enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start, tween(700)) },
+                exitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start, tween(700)) },
+                popEnterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) },
+                popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(700)) },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
@@ -137,19 +139,17 @@ fun ScreenyApp() {
                     val categoryDetail: Routs.CategoryDetail = backStackEntry.toRoute()
                     category = categoryDetail.query
 
-                    CategoryDetailScreen(category, categoriesWiseWallpaperList, onBackClick = { navController.navigateUp() },
-                        onWallpaperClick = { index ->
-                            wallpaperCLick(
-                                index, categoriesWiseWallpaperList.itemSnapshotList.items, sharedWallpaperViewModel, navController
-                            )
-                        })
+                    CategoryDetailScreen(category, categoriesWiseWallpaperList, onBackClick = { navController.navigateUp() }, onWallpaperClick = { index ->
+                        wallpaperCLick(
+                            index, categoriesWiseWallpaperList.itemSnapshotList.items, sharedWallpaperViewModel, navController
+                        )
+                    })
                 }
 
                 composable<Routs.SearchedWallpaper> {
-                    SearchedWallpaperScreen(onNavigateBack = { navController.navigateUp() },
-                        onWallpaperClick = { index, list ->
-                            wallpaperCLick(index, list, sharedWallpaperViewModel, navController)
-                        })
+                    SearchedWallpaperScreen(onNavigateBack = { navController.navigateUp() }, onWallpaperClick = { index, list ->
+                        wallpaperCLick(index, list, sharedWallpaperViewModel, navController)
+                    })
                 }
 
                 composable<Routs.WallpaperDetail> {
@@ -162,9 +162,7 @@ fun ScreenyApp() {
                     val wallpaperId = backStackEntry.toRoute<Routs.FavouriteDetail>().wallpaperId
                     val wallpaperUrl = backStackEntry.toRoute<Routs.FavouriteDetail>().wallpaperUrl
                     FavouriteDetailScreen(
-                        animatedVisibilityScope = this@composable,
-                        wallpaper = CommonWallpaperEntity(wallpaperId, wallpaperUrl),
-                        navController = navController
+                        animatedVisibilityScope = this@composable, wallpaper = CommonWallpaperEntity(wallpaperId, wallpaperUrl), navController = navController
                     )
                 }
 

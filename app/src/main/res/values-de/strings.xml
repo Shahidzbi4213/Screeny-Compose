@@ -33,4 +33,14 @@
     <string name="dark">Dunkel</string>
     <string name="light">Licht</string>
     <string name="categories">Kategorien</string>
+    <string name="selected_language">Ausgewählte Sprache</string>
+    <string name="others">Andere</string>
+    <string name="share_app">App teilen</string>
+    <string name="rate_us">Bewerten Sie uns</string>
+    <string name="feedback">Rückmeldung</string>
+    <string name="privacy_policy">Datenschutzrichtlinie</string>
+    <string name="ok">OK</string>
+    <string name="adaptive_colors">Adaptive Farben</string>
+    <string name="personalize_your_experience">Personalisieren Sie Ihr Erlebnis!</string>
+    <string name="match_colors_to_your_wallpaper">Passen Sie die Farben an Ihr Hintergrundbild an!</string>
 </resources>

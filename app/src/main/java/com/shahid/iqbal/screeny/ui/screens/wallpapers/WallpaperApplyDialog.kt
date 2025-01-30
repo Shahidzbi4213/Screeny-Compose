@@ -71,7 +71,7 @@ private fun DialogContent(wallpaper: Drawable?, onCancel: () -> Unit) {
     ) {
         Text(
             text = stringResource(id = R.string.wallpaper_dialog_title),
-            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.W500),
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
         )
 
         Column(

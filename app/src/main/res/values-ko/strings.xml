@@ -33,5 +33,15 @@
     <string name="dark">어두운</string>
     <string name="light">빛</string>
     <string name="categories">카테고리</string>
+    <string name="selected_language">선택한 언어</string>
+    <string name="others">기타</string>
+    <string name="share_app">앱 공유</string>
+    <string name="rate_us">우리를 평가해 주세요</string>
+    <string name="feedback">피드백</string>
+    <string name="privacy_policy">개인 정보 보호 정책</string>
+    <string name="ok">좋아요</string>
+    <string name="adaptive_colors">적응형 색상</string>
+    <string name="personalize_your_experience">귀하의 경험을 개인화하십시오!</string>
+    <string name="match_colors_to_your_wallpaper">배경화면에 색상을 맞추세요!</string>
 
 </resources>

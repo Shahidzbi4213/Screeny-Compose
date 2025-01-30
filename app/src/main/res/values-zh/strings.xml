@@ -33,4 +33,14 @@
     <string name="dark">黑暗的</string>
     <string name="light">光</string>
     <string name="categories">类别</string>
+    <string name="selected_language">所选语言</string>
+    <string name="others">其他的</string>
+    <string name="share_app">分享应用程序</string>
+    <string name="rate_us">评价我们</string>
+    <string name="feedback">反馈</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="ok">好的</string>
+    <string name="adaptive_colors">自适应颜色</string>
+    <string name="personalize_your_experience">个性化您的体验！</string>
+    <string name="match_colors_to_your_wallpaper">为您的壁纸搭配颜色！</string>
 </resources>

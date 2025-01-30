@@ -33,5 +33,15 @@
     <string name="dark">Sombre</string>
     <string name="light">Lumière</string>
     <string name="categories">Catégories</string>
+    <string name="selected_language">Langue sélectionnée</string>
+    <string name="others">Autres</string>
+    <string name="share_app">Partager l\'application</string>
+    <string name="rate_us">Évaluez-nous</string>
+    <string name="feedback">Retour</string>
+    <string name="privacy_policy">politique de confidentialité</string>
+    <string name="ok">D\'ACCORD</string>
+    <string name="adaptive_colors">Couleurs adaptatives</string>
+    <string name="personalize_your_experience">Personnalisez votre expérience !</string>
+    <string name="match_colors_to_your_wallpaper">Assortissez les couleurs à votre papier peint !</string>
 
 </resources>
