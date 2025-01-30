@@ -33,5 +33,15 @@
     <string name="dark">Escuro</string>
     <string name="light">Luz</string>
     <string name="categories">Categorias</string>
+    <string name="selected_language">Idioma selecionado</string>
+    <string name="others">Outros</string>
+    <string name="share_app">Compartilhar aplicativo</string>
+    <string name="rate_us">Avalie-nos</string>
+    <string name="feedback">Opinião</string>
+    <string name="privacy_policy">política de Privacidade</string>
+    <string name="ok">OK</string>
+    <string name="adaptive_colors">Cores Adaptáveis</string>
+    <string name="personalize_your_experience">Personalize sua experiência!</string>
+    <string name="match_colors_to_your_wallpaper">Combine as cores com o seu papel de parede!</string>
 
 </resources>

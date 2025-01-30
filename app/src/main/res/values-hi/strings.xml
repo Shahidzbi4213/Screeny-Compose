@@ -33,5 +33,15 @@
     <string name="dark">अँधेरा</string>
     <string name="light">रोशनी</string>
     <string name="categories">श्रेणियाँ</string>
+    <string name="selected_language">चयनित भाषा</string>
+    <string name="others">अन्य</string>
+    <string name="share_app">ऐप साझा करें</string>
+    <string name="rate_us">हमें रेटिंग दें</string>
+    <string name="feedback">प्रतिक्रिया</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="ok">ठीक है</string>
+    <string name="adaptive_colors">अनुकूली रंग</string>
+    <string name="personalize_your_experience">अपने अनुभव को निजीकृत करें!</string>
+    <string name="match_colors_to_your_wallpaper">अपने वॉलपेपर से रंगों का मिलान करें!</string>
 
 </resources>

@@ -33,5 +33,15 @@
     <string name="dark">Темный</string>
     <string name="light">Свет</string>
     <string name="categories">Категории</string>
+    <string name="selected_language">Выбранный язык</string>
+    <string name="others">Другие</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="rate_us">Оцените нас</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="privacy_policy">политика конфиденциальности</string>
+    <string name="ok">ХОРОШО</string>
+    <string name="adaptive_colors">Адаптивные цвета</string>
+    <string name="personalize_your_experience">Персонализируйте свой опыт!</string>
+    <string name="match_colors_to_your_wallpaper">Подбирайте цвета к своим обоям!</string>
 
 </resources>

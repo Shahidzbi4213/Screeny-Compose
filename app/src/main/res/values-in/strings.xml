@@ -33,5 +33,15 @@
     <string name="dark">Gelap</string>
     <string name="light">Lampu</string>
     <string name="categories">Kategori</string>
+    <string name="selected_language">Bahasa yang Dipilih</string>
+    <string name="others">Yang lain</string>
+    <string name="share_app">Bagikan Aplikasi</string>
+    <string name="rate_us">Nilai Kami</string>
+    <string name="feedback">Masukan</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="ok">OKE</string>
+    <string name="adaptive_colors">Warna Adaptif</string>
+    <string name="personalize_your_experience">Personalisasikan Pengalaman Anda!</string>
+    <string name="match_colors_to_your_wallpaper">Cocokkan Warna dengan Wallpaper Anda!</string>
 
 </resources>

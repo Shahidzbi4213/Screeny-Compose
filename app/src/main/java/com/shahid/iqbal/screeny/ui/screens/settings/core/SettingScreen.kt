@@ -1,5 +1,6 @@
 package com.shahid.iqbal.screeny.ui.screens.settings.core
 
+import android.os.Build
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.ui.routs.Routs
+import com.shahid.iqbal.screeny.ui.screens.settings.components.DynamicColorDialog
 import com.shahid.iqbal.screeny.ui.screens.settings.components.SettingItem
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.findLanguageByCode
@@ -40,6 +42,7 @@ fun SettingScreen(
 ) {
 
     val userPreference by settingViewModel.userPreference.collectAsStateWithLifecycle()
+    val showDynamicColorDialog by settingViewModel.shouldShowDynamicDialog.collectAsStateWithLifecycle()
 
 
     CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
@@ -60,12 +63,18 @@ fun SettingScreen(
 
             Spacer(Modifier.height(10.dp))
 
-            SettingItem(title = R.string.app_lanuage, description = if (Locale.getDefault().language.contains(userPreference.languageCode)) stringResource(R.string.system_default) else findLanguageByCode(userPreference.languageCode).languageName, icon = R.drawable.language_icon,
+            SettingItem(title = R.string.app_lanuage, description = if (Locale.getDefault().language
+                    .contains(userPreference.languageCode)
+            ) stringResource(R.string.system_default)
+            else findLanguageByCode(userPreference.languageCode).languageName, icon = R.drawable.language_icon,
                 onClick = { navController.navigate(Routs.Language) })
 
-            SettingItem(title = R.string.dynamic_color, description =
-            if (userPreference.shouldShowDynamicColor) stringResource(R.string.on).uppercase()
-            else stringResource(R.string.off).uppercase(), icon = R.drawable.dynamic_color, onClick = {})
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                SettingItem(title = R.string.adaptive_colors, description =
+                if (userPreference.shouldShowDynamicColor) stringResource(R.string.on).uppercase()
+                else stringResource(R.string.off).uppercase(), icon = R.drawable.dynamic_color, onClick = { settingViewModel.updateDynamicDialogShowState() })
+            }
 
             SettingItem(title = R.string.app_mode, description = when (userPreference.appMode) {
                 AppMode.LIGHT -> stringResource(R.string.light)
@@ -86,10 +95,23 @@ fun SettingScreen(
             )
             Spacer(Modifier.height(10.dp))
 
-            SettingItem(title = R.string.share_app, description = null, icon = R.drawable.share_app_icon, onClick = {})
+            SettingItem(title = R.string.share_app, description = null, icon = R.drawable.share_app_icon, onClick = { })
             SettingItem(title = R.string.rate_us, description = null, icon = R.drawable.rate_us_icon, onClick = {})
             SettingItem(title = R.string.feedback, description = null, icon = R.drawable.feeback_icon, onClick = {})
             SettingItem(title = R.string.privacy_policy, description = null, icon = R.drawable.privacy_policy_icon, onClick = {})
+
+
+            if (showDynamicColorDialog) {
+                DynamicColorDialog(userPreference = userPreference,
+                    onDismissRequest = { settingViewModel.updateDynamicDialogShowState() },
+                    onEnabled = {
+                        settingViewModel.updateDynamicColor(true)
+                        settingViewModel.updateDynamicDialogShowState()
+                    }, onDisabled = {
+                        settingViewModel.updateDynamicColor(false)
+                        settingViewModel.updateDynamicDialogShowState()
+                    })
+            }
         }
 
 

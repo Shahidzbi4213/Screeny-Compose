@@ -33,5 +33,15 @@
     <string name="dark">Donker</string>
     <string name="light">Licht</string>
     <string name="categories">Categorieën</string>
+    <string name="selected_language">Geselecteerde taal</string>
+    <string name="others">Anderen</string>
+    <string name="share_app">Deel app</string>
+    <string name="rate_us">Beoordeel ons</string>
+    <string name="feedback">Feedback</string>
+    <string name="privacy_policy">Privacybeleid</string>
+    <string name="ok">OK</string>
+    <string name="adaptive_colors">Adaptieve kleuren</string>
+    <string name="personalize_your_experience">Personaliseer uw ervaring!</string>
+    <string name="match_colors_to_your_wallpaper">Match kleuren met je achtergrond!</string>
 
 </resources>

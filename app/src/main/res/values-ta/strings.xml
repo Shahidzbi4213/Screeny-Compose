@@ -33,5 +33,15 @@
     <string name="dark">இருள்</string>
     <string name="light">ஒளி</string>
     <string name="categories">வகைகள்</string>
+    <string name="selected_language">தேர்ந்தெடுக்கப்பட்ட மொழி</string>
+    <string name="others">மற்றவை</string>
+    <string name="share_app">ஆப்ஸைப் பகிரவும்</string>
+    <string name="rate_us">எங்களை மதிப்பிடு</string>
+    <string name="feedback">பின்னூட்டம்</string>
+    <string name="privacy_policy">தனியுரிமைக் கொள்கை</string>
+    <string name="ok">சரி</string>
+    <string name="adaptive_colors">தகவமைப்பு நிறங்கள்</string>
+    <string name="personalize_your_experience">உங்கள் அனுபவத்தைத் தனிப்பயனாக்குங்கள்!</string>
+    <string name="match_colors_to_your_wallpaper">உங்கள் வால்பேப்பருடன் வண்ணங்களைப் பொருத்துங்கள்!</string>
 
 </resources>

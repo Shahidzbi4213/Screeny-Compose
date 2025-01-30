@@ -33,4 +33,14 @@
     <string name="dark">অন্ধকার</string>
     <string name="light">আলো</string>
     <string name="categories">ক্যাটাগরি</string>
+    <string name="selected_language">নির্বাচিত ভাষা</string>
+    <string name="others">অন্যরা</string>
+    <string name="share_app">অ্যাপ শেয়ার করুন</string>
+    <string name="rate_us">আমাদের রেট</string>
+    <string name="feedback">প্রতিক্রিয়া</string>
+    <string name="privacy_policy">গোপনীয়তা নীতি</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="adaptive_colors">অভিযোজিত রং</string>
+    <string name="personalize_your_experience">আপনার অভিজ্ঞতা ব্যক্তিগতকৃত!</string>
+    <string name="match_colors_to_your_wallpaper">আপনার ওয়ালপেপার রং মেলে!</string>
 </resources>

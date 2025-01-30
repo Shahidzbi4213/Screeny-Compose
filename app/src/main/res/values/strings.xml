@@ -38,5 +38,9 @@
     <string name="rate_us">Rate Us</string>
     <string name="feedback">Feedback</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="ok">OK</string>
+    <string name="adaptive_colors">Adaptive Colors</string>
+    <string name="personalize_your_experience">Personalize Your Experience!</string>
+    <string name="match_colors_to_your_wallpaper">Match Colors to Your Wallpaper!</string>
 
 </resources>

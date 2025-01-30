@@ -33,5 +33,15 @@
     <string name="dark">Ciemny</string>
     <string name="light">Światło</string>
     <string name="categories">Kategorie</string>
+    <string name="selected_language">Wybrany język</string>
+    <string name="others">Inni</string>
+    <string name="share_app">Udostępnij aplikację</string>
+    <string name="rate_us">Oceń nas</string>
+    <string name="feedback">Informacja zwrotna</string>
+    <string name="privacy_policy">Polityka prywatności</string>
+    <string name="ok">OK</string>
+    <string name="adaptive_colors">Kolory adaptacyjne</string>
+    <string name="personalize_your_experience">Spersonalizuj swoje doświadczenie!</string>
+    <string name="match_colors_to_your_wallpaper">Dopasuj kolory do swojej tapety!</string>
 
 </resources>
