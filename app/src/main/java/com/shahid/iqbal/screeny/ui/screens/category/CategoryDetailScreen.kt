@@ -1,6 +1,5 @@
 package com.shahid.iqbal.screeny.ui.screens.category
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.ImageLoader
@@ -72,17 +72,20 @@ fun CategoryDetailScreen(
                 }
             }
 
-            items(wallpapers.itemCount,
-                key = { "${wallpapers[it]?.id}_$it" }) { index ->
-                if (index < wallpapers.itemCount) {
-                    val wallpaper = wallpapers[index]
-                    if (wallpaper != null) {
-                        WallpaperItem(wallpaper = wallpaper.wallpaperSource.portrait, imageLoader = imageLoader) {
-                            onWallpaperClick(wallpapers.itemSnapshotList.items.indexOf(wallpaper))
-                        }
+            items(
+                count = wallpapers.itemCount,
+                key = { "${wallpapers[it]?.id}_$it" }
+            ) { index ->
+                wallpapers[index]?.let { wallpaper ->
+                    WallpaperItem(
+                        wallpaper = wallpaper.wallpaperSource.portrait,
+                        imageLoader = imageLoader
+                    ) {
+                        onWallpaperClick(index)
                     }
                 }
             }
+
 
             if (wallpapers.loadState.append == LoadState.Loading)
                 item(span = { GridItemSpan(this.maxLineSpan) }) {
@@ -111,7 +114,7 @@ fun ToolBar(title: String, modifier: Modifier = Modifier, onBackClick: () -> Uni
         )
 
         Text(
-            text = title, style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            text = title, style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold, fontSize = 18.sp),
             fontFamily = screenyFontFamily, modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()

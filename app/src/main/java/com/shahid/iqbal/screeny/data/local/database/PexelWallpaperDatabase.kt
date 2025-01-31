@@ -2,6 +2,8 @@ package com.shahid.iqbal.screeny.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.shahid.iqbal.screeny.data.local.converter.AppModeConverter
 import com.shahid.iqbal.screeny.data.local.dao.FavouriteWallpaperDao
 import com.shahid.iqbal.screeny.data.local.dao.PexelWallpaperDao
 import com.shahid.iqbal.screeny.data.local.dao.PexelWallpaperRemoteKeysDao
@@ -18,8 +20,10 @@ import com.shahid.iqbal.screeny.models.WallpaperRemoteKeys
         WallpaperRemoteKeys::class,
         RecentSearch::class,
         FavouriteWallpaper::class,
-        UserPreference::class], version = 1, exportSchema = false
+        UserPreference::class],
+    version = 1, exportSchema = false
 )
+@TypeConverters(AppModeConverter::class)
 abstract class PexelWallpaperDatabase : RoomDatabase() {
 
     abstract fun pexelWallpaperDao(): PexelWallpaperDao

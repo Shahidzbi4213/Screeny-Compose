@@ -4,6 +4,7 @@ import com.shahid.iqbal.screeny.ui.screens.home.WallpaperViewModel
 import com.shahid.iqbal.screeny.ui.screens.category.CategoryViewModel
 import com.shahid.iqbal.screeny.ui.screens.favourite.FavouriteViewModel
 import com.shahid.iqbal.screeny.ui.screens.search.SearchViewModel
+import com.shahid.iqbal.screeny.ui.screens.settings.core.SettingViewModel
 import com.shahid.iqbal.screeny.ui.screens.settings.language.LanguageViewModel
 import com.shahid.iqbal.screeny.ui.screens.splash.SplashViewModel
 import com.shahid.iqbal.screeny.ui.screens.wallpapers.ActionViewModel
@@ -22,6 +23,7 @@ val screensModule = module {
     viewModel { ActionViewModel(get(),get()) }
     viewModel { FavouriteViewModel(get()) }
     viewModel{LanguageViewModel(get())}
+    viewModel { SettingViewModel(get()) }
 
 
 }

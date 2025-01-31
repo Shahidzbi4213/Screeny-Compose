@@ -10,7 +10,6 @@ import com.shahid.iqbal.screeny.R
 
 val screenyFontFamily = FontFamily(Font(R.font.poppins_regular))
 
-// Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = screenyFontFamily, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 24.sp, letterSpacing = 0.5.sp

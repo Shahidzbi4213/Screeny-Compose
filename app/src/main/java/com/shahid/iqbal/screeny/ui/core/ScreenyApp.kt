@@ -1,5 +1,6 @@
 package com.shahid.iqbal.screeny.ui.core
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.WindowInsets
@@ -12,7 +13,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
@@ -22,7 +22,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.models.CommonWallpaperEntity
 import com.shahid.iqbal.screeny.models.Wallpaper
 import com.shahid.iqbal.screeny.ui.routs.Routs
@@ -42,7 +41,7 @@ import com.shahid.iqbal.screeny.ui.screens.favourite.FavouriteScreen
 import com.shahid.iqbal.screeny.ui.screens.home.HomeScreen
 import com.shahid.iqbal.screeny.ui.screens.home.WallpaperViewModel
 import com.shahid.iqbal.screeny.ui.screens.search.SearchedWallpaperScreen
-import com.shahid.iqbal.screeny.ui.screens.settings.SettingScreen
+import com.shahid.iqbal.screeny.ui.screens.settings.core.SettingScreen
 import com.shahid.iqbal.screeny.ui.screens.settings.language.LanguageScreen
 import com.shahid.iqbal.screeny.ui.screens.splash.SplashScreen
 import com.shahid.iqbal.screeny.ui.screens.wallpapers.WallpaperDetailScreen
@@ -50,7 +49,7 @@ import com.shahid.iqbal.screeny.ui.shared.SharedWallpaperViewModel
 import org.koin.androidx.compose.koinViewModel
 import kotlin.system.exitProcess
 
-
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ScreenyApp() {
@@ -79,31 +78,31 @@ fun ScreenyApp() {
     )
 
 
-
     Scaffold(
-        bottomBar = {
-            if (canShowBottomBar) BottomNavigationBar(navController)
-        },
+        bottomBar = { if (canShowBottomBar) BottomNavigationBar(navController) },
         topBar = {
             if (canShowTopBar) {
 
-                val title = stackEntry?.destination?.route?.substringAfterLast(".") ?: stringResource(id = R.string.app_name)
 
-                TopBar(title = title) {
-                    navController.navigate(Routs.SearchedWallpaper)
-                }
+                val title= titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
+                TopBar(title = title) { navController.navigate(Routs.SearchedWallpaper) }
             }
-        }, modifier = Modifier.fillMaxSize(), contentWindowInsets = WindowInsets(0.dp)
+        },
+        modifier = Modifier
+            .fillMaxSize(),
 
+        contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
 
-        SharedTransitionLayout {
+        SharedTransitionLayout() {
 
             NavHost(
                 navController = navController, startDestination = Splash,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
+
+
             ) {
 
 
@@ -129,13 +128,9 @@ fun ScreenyApp() {
                     }
                 }
 
-                composable<Favourite> {
-                    FavouriteScreen(navController = navController, animatedVisibilityScope = this@composable)
-                }
+                composable<Favourite> { FavouriteScreen(navController = navController, animatedVisibilityScope = this@composable) }
 
-                composable<Setting> {
-                    SettingScreen()
-                }
+                composable<Setting> { SettingScreen(navController) }
 
 
                 composable<Routs.CategoryDetail> { backStackEntry ->
@@ -168,7 +163,7 @@ fun ScreenyApp() {
                     val wallpaperUrl = backStackEntry.toRoute<Routs.FavouriteDetail>().wallpaperUrl
                     FavouriteDetailScreen(
                         animatedVisibilityScope = this@composable,
-                        wallpaper = CommonWallpaperEntity(wallpaperId,wallpaperUrl),
+                        wallpaper = CommonWallpaperEntity(wallpaperId, wallpaperUrl),
                         navController = navController
                     )
                 }

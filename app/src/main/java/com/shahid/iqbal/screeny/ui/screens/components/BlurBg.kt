@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
-import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.shahid.iqbal.screeny.ui.utils.BlurTransformation
 
@@ -26,6 +25,7 @@ fun BlurBg(wallpaperUrl: String) {
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = Modifier.fillMaxSize()
+
     )
 
     Box(

@@ -4,16 +4,23 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,9 +31,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
@@ -41,10 +48,9 @@ import com.shahid.iqbal.screeny.ui.screens.components.ActionButtons
 import com.shahid.iqbal.screeny.ui.screens.components.BlurBg
 import com.shahid.iqbal.screeny.ui.screens.components.SinglePageContent
 import com.shahid.iqbal.screeny.ui.shared.SharedWallpaperViewModel
-import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.SetStatusBarBarColor
+import com.shahid.iqbal.screeny.ui.theme.ActionIconBgColor
+import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.noRippleClickable
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNotNull
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -58,8 +64,6 @@ fun WallpaperDetailScreen(
     val index by sharedWallpaperViewModel.selectedWallpaperIndex.collectAsStateWithLifecycle()
     val favouriteList by actionViewModel.getAllFavourites.collectAsStateWithLifecycle()
     val currentlyLoadedWallpaper by sharedWallpaperViewModel.currentWallpaper.collectAsStateWithLifecycle(initialValue = null)
-    val luminanceResults by sharedWallpaperViewModel.luminanceResults.collectAsStateWithLifecycle()
-
     var canShowDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
@@ -70,39 +74,12 @@ fun WallpaperDetailScreen(
 
     var canShowList by remember { mutableStateOf(false) }
     var isFavourite by remember { mutableStateOf(false) }
-    var iconColorIsBlack by remember { mutableStateOf(true) }
 
-
-    val iconColor by animateColorAsState(
-        targetValue = if (iconColorIsBlack) Color.Black else Color.White,
-        label = "Back Button and StatusBar Color",
-    )
 
     LaunchedEffect(key1 = canShowList) {
         delay(100)
         canShowList = true
     }
-
-
-    LaunchedEffect(key1 = Unit) {
-
-        val initialWallpaper = wallpapers[pagerState.currentPage].wallpaperSource.portrait
-        iconColorIsBlack = luminanceResults[initialWallpaper] ?: false
-
-
-
-        snapshotFlow {
-            val wallpaper = wallpapers[pagerState.currentPage].wallpaperSource.portrait
-
-            luminanceResults[wallpaper]
-        }.filterNotNull().collectLatest { isLight ->
-            iconColorIsBlack = isLight
-        }
-    }
-
-
-    SetStatusBarBarColor(iconColorIsBlack)
-
 
     if (!canShowList) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -114,20 +91,25 @@ fun WallpaperDetailScreen(
 
     AnimatedVisibility(
         visible = canShowList, modifier = Modifier.fillMaxSize()
-
     ) {
 
-        Box(contentAlignment = Alignment.BottomCenter) {
+        Box(
+            contentAlignment = Alignment.BottomCenter, modifier = Modifier
+                .fillMaxSize()
+
+        ) {
 
             BlurBg(wallpapers[pagerState.currentPage].wallpaperSource.portrait)
 
-            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = null, modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .safeDrawingPadding()
-                    .clickable { onBack() }
-                    .padding(horizontal = 10.dp, vertical = 20.dp)
-                    .zIndex(90f), tint = iconColor)
+            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, modifier = Modifier
+                .padding(start = 10.dp, top = 50.dp)
+                .size(30.dp)
+                .clip(CircleShape)
+                .background(color = ActionIconBgColor, shape = CircleShape)
+                .padding(5.dp)
+                .align(Alignment.TopStart)
+                .noRippleClickable { onBack() }
+                .zIndex(90f), tint = Color.White)
 
 
             HorizontalPager(
@@ -145,7 +127,7 @@ fun WallpaperDetailScreen(
                 }
 
                 SinglePageContent(
-                    wallpaperUrl = wallpapers[page].wallpaperSource.portrait, imageLoader = imageLoader, pagerState = pagerState, page = page, updateWallpaper = sharedWallpaperViewModel::updateWallpaper, updateLuminanceResult = sharedWallpaperViewModel::performLuminanceWork
+                    wallpaperUrl = wallpapers[page].wallpaperSource.portrait, imageLoader = imageLoader, pagerState = pagerState, page = page, updateWallpaper = sharedWallpaperViewModel::updateWallpaper
                 )
             }
 

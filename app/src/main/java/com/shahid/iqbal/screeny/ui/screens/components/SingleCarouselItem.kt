@@ -30,8 +30,7 @@ import kotlin.math.absoluteValue
 fun SinglePageContent(
     wallpaperUrl: String, imageLoader: ImageLoader,
     pagerState: PagerState, page: Int,
-    updateWallpaper: (Drawable) -> Unit,
-    updateLuminanceResult: (String,Drawable) -> Unit
+    updateWallpaper: (Drawable) -> Unit
 ) {
 
 
@@ -51,10 +50,6 @@ fun SinglePageContent(
                 if (page == pagerState.currentPage) {
                     updateWallpaper(it)
                 }
-
-                updateLuminanceResult(wallpaperUrl,it)
-
-
             }
         )
     }
