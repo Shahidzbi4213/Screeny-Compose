@@ -28,7 +28,7 @@ import com.shahid.iqbal.screeny.ui.routs.Routs
 import com.shahid.iqbal.screeny.ui.routs.Routs.Categories
 import com.shahid.iqbal.screeny.ui.routs.Routs.Favourite
 import com.shahid.iqbal.screeny.ui.routs.Routs.Home
-import com.shahid.iqbal.screeny.ui.routs.Routs.Setting
+import com.shahid.iqbal.screeny.ui.routs.Routs.Settings
 import com.shahid.iqbal.screeny.ui.routs.Routs.Splash
 import com.shahid.iqbal.screeny.ui.screens.category.CategoryDetailScreen
 import com.shahid.iqbal.screeny.ui.screens.category.CategoryScreen
@@ -41,7 +41,7 @@ import com.shahid.iqbal.screeny.ui.screens.favourite.FavouriteScreen
 import com.shahid.iqbal.screeny.ui.screens.home.HomeScreen
 import com.shahid.iqbal.screeny.ui.screens.home.WallpaperViewModel
 import com.shahid.iqbal.screeny.ui.screens.search.SearchedWallpaperScreen
-import com.shahid.iqbal.screeny.ui.screens.settings.core.SettingScreen
+import com.shahid.iqbal.screeny.ui.screens.settings.core.SettingsScreen
 import com.shahid.iqbal.screeny.ui.screens.settings.language.LanguageScreen
 import com.shahid.iqbal.screeny.ui.screens.splash.SplashScreen
 import com.shahid.iqbal.screeny.ui.screens.wallpapers.WallpaperDetailScreen
@@ -97,7 +97,7 @@ fun ScreenyApp() {
         SharedTransitionLayout() {
 
             NavHost(
-                navController = navController, startDestination = Splash,
+                navController = navController, startDestination = Settings,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
@@ -130,7 +130,7 @@ fun ScreenyApp() {
 
                 composable<Favourite> { FavouriteScreen(navController = navController, animatedVisibilityScope = this@composable) }
 
-                composable<Setting> { SettingScreen(navController) }
+                composable<Settings> { SettingsScreen(navController) }
 
 
                 composable<Routs.CategoryDetail> { backStackEntry ->

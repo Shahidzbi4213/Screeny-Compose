@@ -1,7 +1,10 @@
 package com.shahid.iqbal.screeny.utils
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.util.LayoutDirection
 import android.util.Log
 import androidx.compose.animation.core.RepeatMode
@@ -18,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.layoutDirection
 import java.util.Locale
 
@@ -59,5 +63,11 @@ object Extensions {
         Box(modifier = Modifier.scale(scale)) {
             content()
         }
+    }
+
+    fun Context.rateUs(activity: Activity?){
+        val uri: Uri = Uri.parse("https://play.google.com/store/apps/details?id=${activity?.packageName}")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 }

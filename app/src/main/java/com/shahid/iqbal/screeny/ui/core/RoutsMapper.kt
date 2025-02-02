@@ -34,7 +34,7 @@ fun titleMapper(routName: String?): String {
         "Home" -> stringResource(id = R.string.home)
         "Categories" -> stringResource(id = R.string.categories)
         "Favourite" -> stringResource(id = R.string.favourite)
-        "Setting" -> stringResource(id = R.string.setting)
+        "Settings" -> stringResource(id = R.string.settings)
         else -> stringResource(id = R.string.app_name)
     }
 }

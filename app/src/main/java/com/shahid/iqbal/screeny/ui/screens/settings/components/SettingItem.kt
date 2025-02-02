@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,7 +30,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.shahid.iqbal.screeny.ui.theme.screenyFontFamily
+import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.noRippleClickable
 import com.shahid.iqbal.screeny.ui.utils.NoRippleInteractionSource
 import com.shahid.iqbal.screeny.utils.Extensions.mirror
 
@@ -37,72 +40,52 @@ import com.shahid.iqbal.screeny.utils.Extensions.mirror
  * Created by Shahid Iqbal on 28/1/25.
  */
 
-
 @Composable
-fun SettingItem(
+fun SettingsItem(
     modifier: Modifier = Modifier,
     @StringRes title: Int,
     description: String? = null,
-    @DrawableRes icon: Int, onClick: () -> Unit
+    @DrawableRes icon: Int,
+    onClick: () -> Unit
 ) {
+    Row(
+        modifier = modifier
+            .noRippleClickable { onClick() }
+            .fillMaxWidth()
+            .height(60.dp)
+            .padding(horizontal = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
 
-    Column {
+        AsyncImage(
+            modifier = Modifier.size(24.dp),
+            model = icon,
+            contentDescription = null
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Text(
+            modifier = Modifier.weight(1f),
+            text = stringResource(title),
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            fontFamily = screenyFontFamily
+        )
 
-        OutlinedCard(
-            onClick = onClick,
-            interactionSource = NoRippleInteractionSource(),
-            modifier = modifier
-                .fillMaxWidth(0.95f)
-                .height(70.dp),
-            elevation = CardDefaults.elevatedCardElevation(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
+        if (description != null) {
+            Text(
+                text = description,
+                style = MaterialTheme.typography.labelMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
             )
-        ) {
-
-            Row(
+            Spacer(modifier = Modifier.width(10.dp))
+            Icon(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(10.dp), verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Image(
-                    painter = painterResource(id = icon), contentDescription = null, modifier = Modifier.size(24.dp)
-                )
-
-                Spacer(modifier = Modifier.width(10.dp))
-
-                Text(
-                    text = stringResource(title),
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    modifier = Modifier.weight(1f),
-                    maxLines = 1, overflow = TextOverflow.Ellipsis,
-                    fontFamily = screenyFontFamily
-                )
-
-                if (description != null) {
-                    Text(
-                        text = description,
-                        style = MaterialTheme.typography.labelMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    )
-
-                    Spacer(modifier = Modifier.width(10.dp))
-
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowUp,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .mirror()
-                            .rotate(90f)
-                    )
-                }
-
-
-
-            }
+                    .size(24.dp)
+                    .mirror()
+                    .rotate(90f),
+                imageVector = Icons.Default.KeyboardArrowUp,
+                contentDescription = null
+            )
         }
-        Spacer(modifier = Modifier.height(10.dp))
     }
-
-
 }

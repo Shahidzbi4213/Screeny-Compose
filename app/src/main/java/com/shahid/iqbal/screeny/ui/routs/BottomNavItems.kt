@@ -41,7 +41,7 @@ val bottomNavigationItems = listOf(
     ), BottomNavRoutes(
         name = R.string.favourite, route = Routs.Favourite, icon = IconType.Vector(Icons.Outlined.FavoriteBorder), selectedIcon = IconType.Vector(Icons.Filled.Favorite)
     ), BottomNavRoutes(
-        name = R.string.setting, route = Routs.Setting, icon = IconType.Vector(Icons.Outlined.Settings), selectedIcon = IconType.Vector(Icons.Filled.Settings)
+        name = R.string.settings, route = Routs.Settings, icon = IconType.Vector(Icons.Outlined.Settings), selectedIcon = IconType.Vector(Icons.Filled.Settings)
     )
 )
 

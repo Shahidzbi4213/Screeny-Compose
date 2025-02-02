@@ -26,7 +26,7 @@ sealed interface Routs {
     data class FavouriteDetail(val wallpaperId: Long , val wallpaperUrl: String) : Routs
 
     @Serializable
-    data object Setting : Routs
+    data object Settings : Routs
 
     @Serializable
     @Stable
