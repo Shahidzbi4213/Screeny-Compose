@@ -39,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.ui.routs.Routs
+import com.shahid.iqbal.screeny.ui.screens.settings.components.DynamicColorDialog
 import com.shahid.iqbal.screeny.ui.screens.settings.components.RateUsDialog
 import com.shahid.iqbal.screeny.ui.screens.settings.components.SettingsItem
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
@@ -57,6 +58,8 @@ fun SettingsScreen(
 ) {
 
     val userPreference by settingViewModel.userPreference.collectAsStateWithLifecycle()
+    val showDynamicDialog by settingViewModel.shouldShowDynamicDialog.collectAsStateWithLifecycle()
+
     var showRateUsDialog by remember { mutableStateOf(false) }
     val activity = LocalActivity.current
     val context = LocalContext.current
@@ -86,8 +89,15 @@ fun SettingsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
-                    .background(color = White, shape = RoundedCornerShape(16.dp))
-                    .border(color = Gray, width = 1.dp, shape = RoundedCornerShape(16.dp))
+                    .background(
+                        color = MaterialTheme.colorScheme
+                            .surfaceContainer, shape = RoundedCornerShape(16.dp)
+                    )
+                    .border(
+                        color = MaterialTheme.colorScheme
+                            .outline,
+                        width = 1.dp, shape = RoundedCornerShape(16.dp)
+                    )
                     .padding(horizontal = 10.dp, vertical = 5.dp)
             ) {
 
@@ -102,24 +112,29 @@ fun SettingsScreen(
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    SettingsItem(title = R.string.dynamic_color,
+                    SettingsItem(
+                        title = R.string.dynamic_color,
                         description =
                         if (userPreference.shouldShowDynamicColor) stringResource(R.string.on).uppercase()
                         else stringResource(R.string.off).uppercase(),
                         icon = R.drawable.dynamic_color,
-                        onClick = {})
+                        onClick = settingViewModel::updateDynamicDialog
+                    )
 
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 10.dp))
                 }
 
 
-                SettingsItem(title = R.string.app_mode,
+                SettingsItem(
+                    title = R.string.app_mode,
                     description = when (userPreference.appMode) {
                         AppMode.LIGHT -> stringResource(R.string.light)
                         AppMode.DARK -> stringResource(R.string.dark)
                         AppMode.DEFAULT -> stringResource(R.string.system_default)
                     },
-                    icon = R.drawable.app_mode, onClick = {})
+                    icon = R.drawable.app_mode,
+                    onClick = {}
+                )
             }
 
             Spacer(Modifier.height(20.dp))
@@ -139,8 +154,15 @@ fun SettingsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
-                    .background(color = White, shape = RoundedCornerShape(16.dp))
-                    .border(color = Gray, width = 1.dp, shape = RoundedCornerShape(16.dp))
+                    .background(
+                        color = MaterialTheme.colorScheme
+                            .surfaceContainer, shape = RoundedCornerShape(16.dp)
+                    )
+                    .border(
+                        color = MaterialTheme.colorScheme
+                            .outline,
+                        width = 1.dp, shape = RoundedCornerShape(16.dp)
+                    )
                     .padding(horizontal = 10.dp, vertical = 5.dp)
             ) {
                 SettingsItem(
@@ -181,6 +203,26 @@ fun SettingsScreen(
                 showRateUsDialog = false
                 userRating.debug("SettingsScreen")
                 context.rateUs(activity)
+            }
+        )
+    }
+
+    if (showDynamicDialog) {
+        DynamicColorDialog(
+            modifier = Modifier,
+            userPreference = userPreference,
+            onDismissRequest = settingViewModel::updateDynamicDialog,
+            onEnabled = {
+                with(settingViewModel) {
+                    updateDynamicColor(true)
+                    updateDynamicDialog()
+                }
+            },
+            onDisabled = {
+                with(settingViewModel) {
+                    updateDynamicColor(false)
+                    updateDynamicDialog()
+                }
             }
         )
     }

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.noRippleClickable
 import com.shahid.iqbal.screeny.ui.utils.NoRippleInteractionSource
 
 /**
@@ -35,39 +36,27 @@ fun DialogComponentItem(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    OutlinedCard(
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .height(50.dp),
-        onClick = onClick,
-        interactionSource = NoRippleInteractionSource(),
-        elevation = CardDefaults.elevatedCardElevation(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
+            .height(50.dp)
+            .noRippleClickable { onClick() }
+            .padding(horizontal = 10.dp),
+        horizontalArrangement = Arrangement.Center
     ) {
+        Text(
+            text = text, modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Start,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 10.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = text, modifier = Modifier
-                    .weight(1f)
-                    .wrapContentHeight(),
-                style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Start,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.width(10.dp))
-            RadioButton(selected = isSelected, onClick = null)
-        }
-
+        Spacer(modifier = Modifier.width(10.dp))
+        RadioButton(selected = isSelected, onClick = null)
     }
 
 }

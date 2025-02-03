@@ -18,7 +18,8 @@ class SettingViewModel(private val preferenceRepo: UserPreferenceRepo) : ViewMod
         initialValue = UserPreference()
     )
 
-    val shouldShowDynamicDialog = MutableStateFlow<Boolean>(false)
+    var shouldShowDynamicDialog = MutableStateFlow<Boolean>(false)
+        private set
 
 
     fun updateDynamicColor(isDynamicColor: Boolean) {
@@ -31,5 +32,9 @@ class SettingViewModel(private val preferenceRepo: UserPreferenceRepo) : ViewMod
         viewModelScope.launch {
             preferenceRepo.updateAppMode(appMode)
         }
+    }
+
+    fun updateDynamicDialog() {
+        shouldShowDynamicDialog.value = shouldShowDynamicDialog.value.not()
     }
 }
