@@ -1,12 +1,17 @@
 package com.shahid.iqbal.screeny.ui.screens.settings.components
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,31 +41,30 @@ fun SingleLanguageItem(
 
     val backgroundColor by animateColorAsState(
         targetValue = if (isSelected && canApplyBg)
-            MaterialTheme.colorScheme.primaryContainer else Color.Transparent, label = "Select Language Background Color"
+            MaterialTheme.colorScheme.onSecondary else Color.Transparent, label = "Select Language Background Color",
+        animationSpec = tween()
     )
 
     Row(modifier = modifier
-        .fillMaxWidth()
-        .wrapContentHeight()
         .clip(shape = RoundedCornerShape(10.dp))
         .noRippleClickable { onClick(language) }
-        .background(
-            color = backgroundColor
-        )
-        .padding(horizontal = 10.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+        .background(color = backgroundColor),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center) {
 
         Text(
-            text = language.flag, style = MaterialTheme.typography.titleMedium, modifier = Modifier
+            text = language.flag, style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
                 .wrapContentSize()
-                .padding(end = 10.dp)
+                .padding(horizontal = 10.dp)
         )
 
         Text(
-            text = language.languageName, style = MaterialTheme.typography.titleMedium, modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f)
-        )
+            text = language.languageName,
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .weight(1f),
+            )
 
         RadioButton(
             selected = isSelected, onClick = null, enabled = false,
@@ -69,7 +73,8 @@ fun SingleLanguageItem(
                 disabledSelectedColor = RadioButtonDefaults.colors().selectedColor,
                 selectedColor = Color.White
             ),
-            interactionSource = NoRippleInteractionSource()
+            interactionSource = NoRippleInteractionSource(),
+            modifier = Modifier.padding(end = 10.dp)
         )
     }
 }

@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,18 +51,16 @@ fun Toolbar(
             modifier = Modifier.weight(1f)
         )
 
-        Button(
+        TextButton(
             onClick = onApply,
             shape = RoundedCornerShape(10.dp),
             interactionSource = NoRippleInteractionSource(),
-            modifier = Modifier
-                .padding(horizontal = 10.dp),
+            modifier = Modifier.padding(horizontal = 10.dp),
             enabled = isApplyEnable
         ) {
             Text(
                 text = stringResource(id = R.string.apply),
                 style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-
             )
         }
     }

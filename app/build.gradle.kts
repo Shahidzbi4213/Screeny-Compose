@@ -21,8 +21,8 @@ android {
             keyPassword = "screeny"
         }
     }
-        namespace = "com.shahid.iqbal.screeny"
-        compileSdk = 35
+    namespace = "com.shahid.iqbal.screeny"
+    compileSdk = 35
 
 
     defaultConfig {
@@ -32,7 +32,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        vectorDrawables { useSupportLibrary = true
+        vectorDrawables {
+            useSupportLibrary = true
         }
 
         val prop = Properties().apply {
@@ -41,11 +42,11 @@ android {
         val apiKey = prop.getProperty("api_key")
         buildConfigField("String", "API_KEY", apiKey)
 
-        androidResources {
-            localeFilters += mutableSetOf( "en", "ar", "ru", "in", "bn", "hi", "uk", "vi", "ko", "ja", "zh", "sv",
-                "pl", "ms", "fr", "it", "fa", "tr", "th", "pt", "es", "de",
-                "nl", "ta", "cs", "ur")
-        }
+        resourceConfigurations += mutableSetOf(
+            "en", "ar", "ru", "in", "bn", "hi", "uk", "vi", "ko", "ja", "zh", "sv",
+            "pl", "ms", "fr", "it", "fa", "tr", "th", "pt", "es", "de",
+            "nl", "ta", "cs", "ur"
+        )
 
     }
 
@@ -61,7 +62,10 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             signingConfig = signingConfigs.getByName("release")
         }
     }

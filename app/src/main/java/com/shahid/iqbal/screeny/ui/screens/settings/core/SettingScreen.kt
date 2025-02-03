@@ -1,13 +1,11 @@
 package com.shahid.iqbal.screeny.ui.screens.settings.core
 
-import android.app.Activity
-import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -92,20 +90,29 @@ fun SettingsScreen(
                     .border(color = Gray, width = 1.dp, shape = RoundedCornerShape(16.dp))
                     .padding(horizontal = 10.dp, vertical = 5.dp)
             ) {
+
                 SettingsItem(title = R.string.app_lanuage,
                     description = if (Locale.getDefault().language.contains(userPreference.languageCode)) stringResource(
                         R.string.system_default
                     ) else findLanguageByCode(userPreference.languageCode).languageName,
                     icon = R.drawable.language_icon,
                     onClick = { navController.navigate(Routs.Language) })
+
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 10.dp))
-                SettingsItem(title = R.string.dynamic_color,
-                    description =
-                    if (userPreference.shouldShowDynamicColor) stringResource(R.string.on).uppercase()
-                    else stringResource(R.string.off).uppercase(),
-                    icon = R.drawable.dynamic_color,
-                    onClick = {})
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 10.dp))
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    SettingsItem(title = R.string.dynamic_color,
+                        description =
+                        if (userPreference.shouldShowDynamicColor) stringResource(R.string.on).uppercase()
+                        else stringResource(R.string.off).uppercase(),
+                        icon = R.drawable.dynamic_color,
+                        onClick = {})
+
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 10.dp))
+                }
+
+
                 SettingsItem(title = R.string.app_mode,
                     description = when (userPreference.appMode) {
                         AppMode.LIGHT -> stringResource(R.string.light)

@@ -1,17 +1,17 @@
 [versions]
-agp = "8.8.0"
+agp = "8.5.2"
 coilCompose = "2.7.0"
 koinBom = "3.5.6"
 kotlin = "2.0.20"
 coreKtx = "1.15.0"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
-composeBom = "2025.01.00"
+composeBom = "2025.01.01"
 kspVersion = "2.0.20-1.0.25"
 ktor = "2.3.12"
 roomVersion = "2.6.1"
 pager3Version = "3.3.5"
-composeNavigationVersion = "2.8.5"
+composeNavigationVersion = "2.8.6"
 
 
 [libraries]
@@ -45,7 +45,6 @@ room-pagging = { module = "androidx.room:room-paging", version.ref = "roomVersio
 room-ksp = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
 
 pagging-library = { module = "androidx.paging:paging-compose", version.ref = "pager3Version" }
-
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigationVersion" }
 
 

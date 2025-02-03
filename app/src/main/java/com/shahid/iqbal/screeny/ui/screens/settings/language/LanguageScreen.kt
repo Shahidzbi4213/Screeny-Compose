@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -44,15 +46,13 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LanguageScreen(
-    modifier: Modifier = Modifier, navController: NavController, languageViewModel: LanguageViewModel = koinViewModel()
+    modifier: Modifier = Modifier, navController: NavController,
+    languageViewModel: LanguageViewModel = koinViewModel()
 ) {
 
-    val currentSelected by languageViewModel.currentLanguage.collectAsStateWithLifecycle()
-
-    var localSelected by remember {
-        mutableStateOf<LanguageEntity?>(null)
-    }
-    val state = rememberLazyListState()
+    val currentLanguage by languageViewModel.currentLanguage.collectAsStateWithLifecycle()
+    val localSelected by languageViewModel.localSelected.collectAsStateWithLifecycle()
+    val languagesList by languageViewModel.languagesList.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     Column(
@@ -65,7 +65,7 @@ fun LanguageScreen(
 
         Toolbar(
             onBackPress = { navController.navigateUp() },
-            isApplyEnable = localSelected != null,
+            isApplyEnable = localSelected != null && localSelected != currentLanguage,
             onApply = {
                 setUserSelectedLanguageForApp(context, localSelected!!.languageCode)
                 languageViewModel.updateCurrentLanguage(localSelected!!)
@@ -84,16 +84,16 @@ fun LanguageScreen(
                 .padding(10.dp),
             textAlign = TextAlign.Start,
         )
+
+
         SingleLanguageItem(
             modifier = Modifier
-                .height(40.dp)
+                .wrapContentHeight()
                 .fillMaxWidth(0.95f),
-            currentSelected,
+            language = currentLanguage,
             isSelected = localSelected == null,
             canApplyBg = true,
-            onClick = {
-                localSelected = null
-            })
+            onClick = { languageViewModel.updateLocalLanguageSelection(null) })
 
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -106,20 +106,23 @@ fun LanguageScreen(
                 .padding(horizontal = 10.dp),
             textAlign = TextAlign.Start,
         )
+
+
         Spacer(modifier = Modifier.height(10.dp))
+
         CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+
             LazyColumn(
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(), state = state
             ) {
-                items(LANGUAGES_LIST.filter { it != currentSelected }, key = { it.languageName }) { language ->
+                items(languagesList) { language ->
+
                     SingleLanguageItem(
-                        language = language, isSelected = (language == localSelected),
-                        onClick = { selectedLanguage -> localSelected = selectedLanguage },
-                        modifier = Modifier
-                            .fillMaxWidth(0.95f)
-                            .height(40.dp)
+                        language = language,
+                        isSelected = localSelected == language,
+                        onClick = languageViewModel::updateLocalLanguageSelection,
+                        modifier = Modifier.height(50.dp).fillMaxWidth(0.95f)
                     )
                 }
             }
