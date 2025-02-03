@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,18 +11,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,8 +30,6 @@ import androidx.navigation.NavController
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.ui.screens.settings.components.SingleLanguageItem
 import com.shahid.iqbal.screeny.ui.screens.settings.components.Toolbar
-import com.shahid.iqbal.screeny.ui.screens.settings.utils.LANGUAGES_LIST
-import com.shahid.iqbal.screeny.ui.screens.settings.utils.LanguageEntity
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.setUserSelectedLanguageForApp
 import com.shahid.iqbal.screeny.ui.theme.screenyFontFamily
 import org.koin.androidx.compose.koinViewModel
@@ -46,7 +38,8 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LanguageScreen(
-    modifier: Modifier = Modifier, navController: NavController,
+    modifier: Modifier = Modifier,
+    navController: NavController,
     languageViewModel: LanguageViewModel = koinViewModel()
 ) {
 
@@ -64,7 +57,7 @@ fun LanguageScreen(
 
 
         Toolbar(
-            onBackPress = { navController.navigateUp() },
+            onBackPress = navController::navigateUp,
             isApplyEnable = localSelected != null && localSelected != currentLanguage,
             onApply = {
                 setUserSelectedLanguageForApp(context, localSelected!!.languageCode)
@@ -88,7 +81,7 @@ fun LanguageScreen(
 
         SingleLanguageItem(
             modifier = Modifier
-                .wrapContentHeight()
+                .height(50.dp)
                 .fillMaxWidth(0.95f),
             language = currentLanguage,
             isSelected = localSelected == null,
@@ -116,13 +109,16 @@ fun LanguageScreen(
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                items(languagesList) { language ->
+                items(items = languagesList, key = { language -> language.languageName })
+                { language ->
 
                     SingleLanguageItem(
                         language = language,
                         isSelected = localSelected == language,
                         onClick = languageViewModel::updateLocalLanguageSelection,
-                        modifier = Modifier.height(50.dp).fillMaxWidth(0.95f)
+                        modifier = Modifier
+                            .height(50.dp)
+                            .fillMaxWidth(0.95f)
                     )
                 }
             }

@@ -1,6 +1,7 @@
 package com.shahid.iqbal.screeny.ui.screens.settings.components
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -41,8 +42,8 @@ fun SingleLanguageItem(
 
     val backgroundColor by animateColorAsState(
         targetValue = if (isSelected && canApplyBg)
-            MaterialTheme.colorScheme.onSecondary else Color.Transparent, label = "Select Language Background Color",
-        animationSpec = tween()
+            MaterialTheme.colorScheme.onSecondary else Color.Transparent,
+        label = "Select Language Background Color",
     )
 
     Row(modifier = modifier
@@ -53,7 +54,8 @@ fun SingleLanguageItem(
         horizontalArrangement = Arrangement.Center) {
 
         Text(
-            text = language.flag, style = MaterialTheme.typography.titleLarge,
+            text = language.flag,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .wrapContentSize()
                 .padding(horizontal = 10.dp)
@@ -71,7 +73,6 @@ fun SingleLanguageItem(
             colors = RadioButtonDefaults.colors(
                 disabledUnselectedColor = RadioButtonDefaults.colors().unselectedColor,
                 disabledSelectedColor = RadioButtonDefaults.colors().selectedColor,
-                selectedColor = Color.White
             ),
             interactionSource = NoRippleInteractionSource(),
             modifier = Modifier.padding(end = 10.dp)

@@ -97,7 +97,7 @@ fun ScreenyApp() {
         SharedTransitionLayout() {
 
             NavHost(
-                navController = navController, startDestination = Settings,
+                navController = navController, startDestination = Routs.Language,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
