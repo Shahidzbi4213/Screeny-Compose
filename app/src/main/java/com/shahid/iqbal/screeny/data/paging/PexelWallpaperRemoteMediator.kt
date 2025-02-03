@@ -19,13 +19,9 @@ class PexelWallpaperRemoteMediator(
     private val pexelWallpapersApi: PexelWallpapersApi
 ) : RemoteMediator<Int, Wallpaper>() {
 
-    private val wallpaperDao by lazy {
-        wallpaperDatabase.pexelWallpaperDao()
-    }
+    private val wallpaperDao = wallpaperDatabase.pexelWallpaperDao()
+    private val remoteKeysDao = wallpaperDatabase.pexelWallpaperRemoteKeysDao()
 
-    private val remoteKeysDao by lazy {
-        wallpaperDatabase.pexelWallpaperRemoteKeysDao()
-    }
 
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Wallpaper>): MediatorResult {

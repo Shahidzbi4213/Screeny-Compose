@@ -15,7 +15,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
-const val TIME_OUT = 3_000
+const val TIME_OUT = 10_00_0
 
 val networkModule = module {
 

@@ -3,7 +3,6 @@ package com.shahid.iqbal.screeny.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.Uri
 import android.util.LayoutDirection
 import android.util.Log
@@ -21,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.layoutDirection
 import java.util.Locale
 
@@ -32,6 +30,7 @@ object Extensions {
         Log.d(tag, "$this")
     }
 
+    @Stable
     @ReadOnlyComposable
     @Composable
     internal fun Dp.toPx(): Float {
@@ -47,6 +46,7 @@ object Extensions {
     }
 
 
+    @Stable
     @Composable
     fun Pulsating(pulseFraction: Float = 1.2f, content: @Composable () -> Unit) {
         val infiniteTransition = rememberInfiniteTransition(label = "Pulsating Transition")

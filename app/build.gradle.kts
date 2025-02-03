@@ -1,13 +1,12 @@
-import java.io.File
 import java.io.FileInputStream
-import java.util.*
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.ksp)
-    id("kotlinx-serialization")
+    alias(libs.plugins.kotlinx.serialization)
 
 
 }

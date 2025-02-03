@@ -1,24 +1,31 @@
 package com.shahid.iqbal.screeny.di
 
 import coil.ImageLoader
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.data.repositories.FavouriteRepo
 import com.shahid.iqbal.screeny.data.repositories.RecentSearchRepository
 import com.shahid.iqbal.screeny.data.repositories.SearchWallpapersRepository
 import com.shahid.iqbal.screeny.data.repositories.UserPreferenceRepo
 import com.shahid.iqbal.screeny.data.repositories.WallpaperRepository
-import com.shahid.iqbal.screeny.models.UserPreference
+import okhttp3.OkHttpClient
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import java.util.concurrent.TimeUnit
 
 val sharedWallpaperModule = module {
 
-    single<WallpaperRepository> { WallpaperRepository(get(), get()) }
-    single<SearchWallpapersRepository> { SearchWallpapersRepository(get()) }
-    single<RecentSearchRepository> { RecentSearchRepository(get()) }
-    single<FavouriteRepo> { FavouriteRepo(get()) }
-    single<UserPreferenceRepo>{UserPreferenceRepo(get())}
+    singleOf(::WallpaperRepository)
+    singleOf(::SearchWallpapersRepository)
+    singleOf(::RecentSearchRepository)
+    singleOf(::FavouriteRepo)
+    singleOf(::UserPreferenceRepo)
 
-    single<ImageLoader> { ImageLoader.Builder(get()).crossfade(true).build() }
+    single<ImageLoader> {
+        ImageLoader.Builder(get())
+            .crossfade(true)
+            .okHttpClient(
+                OkHttpClient.Builder()
+                    .callTimeout(10L, TimeUnit.SECONDS)
+                    .build()
+            ).build()
+    }
 }
