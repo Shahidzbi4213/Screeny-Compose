@@ -60,8 +60,7 @@ fun SharedTransitionScope.FavouriteScreen(
 
     if (favourites.isEmpty()) {
         NoFavouritePlaceholder(onExplore = { navController.navigate(Routs.Home) })
-    } else {
-        LazyVerticalGrid(
+    } else {        LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             contentPadding = PaddingValues(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),

@@ -4,7 +4,7 @@
     <string name="home">Maison</string>
     <string name="category">Catégorie</string>
     <string name="favourite">Préféré</string>
-    <string name="setting">Paramètre</string>
+    <string name="settings">Paramètre</string>
     <string name="search_wallpaper">Rechercher du papier peint</string>
     <string name="download">Télécharger</string>
     <string name="downloading_wallpaper">Téléchargement de fond d\'écran</string>
