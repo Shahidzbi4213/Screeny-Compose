@@ -15,7 +15,9 @@ import org.koin.dsl.module
 
 val screensModule = module {
 
+
     viewModelOf(::SplashViewModel)
+    viewModelOf(::WallpaperViewModel)
     viewModelOf(::WallpaperViewModel)
     viewModelOf(::CategoryViewModel)
     viewModelOf(::SearchViewModel)

@@ -20,6 +20,7 @@ val sharedWallpaperModule = module {
     singleOf(::FavouriteRepo)
     singleOf(::UserPreferenceRepo)
 
+
     single<ImageLoader> {
         ImageLoader.Builder(get())
             .crossfade(true)

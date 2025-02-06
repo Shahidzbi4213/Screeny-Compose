@@ -19,5 +19,16 @@ val Typography = Typography(
         fontFamily = screenyFontFamily, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 20.sp, letterSpacing = 0.5.sp
     ), labelSmall = TextStyle(
         fontFamily = screenyFontFamily, fontWeight = FontWeight.Medium, fontSize = 11.sp, lineHeight = 16.sp, letterSpacing = 0.5.sp
-    )
+    ),
+    labelLarge = TextStyle(fontFamily = screenyFontFamily),
+    labelMedium = TextStyle(fontFamily = screenyFontFamily),
+    titleSmall = TextStyle(fontFamily = screenyFontFamily),
+    headlineMedium = TextStyle(fontFamily = screenyFontFamily),
+    displayLarge = TextStyle(fontFamily = screenyFontFamily),
+    displaySmall = TextStyle(fontFamily = screenyFontFamily),
+    bodyMedium = TextStyle(fontFamily = screenyFontFamily),
+    bodySmall = TextStyle(fontFamily = screenyFontFamily),
+    displayMedium = TextStyle(fontFamily = screenyFontFamily),
+    headlineLarge = TextStyle(fontFamily = screenyFontFamily),
+    headlineSmall = TextStyle(fontFamily = screenyFontFamily)
 )
