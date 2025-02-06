@@ -1,22 +1,16 @@
 package com.shahid.iqbal.screeny.ui.screens.category
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,21 +48,20 @@ import org.koin.compose.koinInject
 @Composable
 fun CategoryScreen(modifier: Modifier = Modifier, onCategoryClick: (String) -> Unit) {
 
-    var showContent by remember {
-        mutableStateOf(false)
-    }
-
+    var showContent by remember { mutableStateOf(false) }
+    val imageLoader: ImageLoader = koinInject()
 
     LaunchedEffect(key1 = Unit) {
         delay(250)
         showContent = true
     }
 
-    val imageLoader: ImageLoader = koinInject()
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2), verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp), contentPadding = PaddingValues(16.dp),
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(16.dp),
         modifier = modifier.fillMaxSize()
     ) {
 
@@ -109,8 +102,8 @@ fun CategoryItem(category: Category, imageLoader: ImageLoader, onClick: () -> Un
 
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(10.dp))
             .height(100.dp)
+            .clip(RoundedCornerShape(10.dp))
             .noRippleClickable { onClick() },
         contentAlignment = Alignment.Center,
     ) {
@@ -120,7 +113,10 @@ fun CategoryItem(category: Category, imageLoader: ImageLoader, onClick: () -> Un
             contentScale = ContentScale.Crop, onSuccess = { showShimmer = false }, modifier = Modifier
                 .matchParentSize()
                 .background(
-                    shimmerBrush(targetValue = 1300f, showShimmer = showShimmer), shape = RoundedCornerShape(10.dp)
+                    shimmerBrush(
+                        targetValue = 1300f,
+                        showShimmer = showShimmer
+                    ), shape = RoundedCornerShape(10.dp)
                 )
 
         )
