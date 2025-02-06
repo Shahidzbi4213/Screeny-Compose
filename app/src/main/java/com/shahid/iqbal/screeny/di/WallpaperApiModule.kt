@@ -5,7 +5,4 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 
-val wallpaperApiModule = module {
-
-    singleOf(::PexelWallpapersApiImpl)
-}
+val wallpaperApiModule = module { singleOf(::PexelWallpapersApiImpl) }

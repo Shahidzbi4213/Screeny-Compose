@@ -1,6 +1,7 @@
 package com.shahid.iqbal.screeny.di
 
 import coil.ImageLoader
+import coil.request.CachePolicy
 import com.shahid.iqbal.screeny.data.repositories.FavouriteRepo
 import com.shahid.iqbal.screeny.data.repositories.RecentSearchRepository
 import com.shahid.iqbal.screeny.data.repositories.SearchWallpapersRepository
@@ -22,6 +23,9 @@ val sharedWallpaperModule = module {
     single<ImageLoader> {
         ImageLoader.Builder(get())
             .crossfade(true)
+            .crossfade(100)
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .memoryCachePolicy(CachePolicy.DISABLED)
             .okHttpClient(
                 OkHttpClient.Builder()
                     .callTimeout(10L, TimeUnit.SECONDS)
