@@ -84,7 +84,7 @@ fun ScreenyApp() {
             if (canShowTopBar) {
 
 
-                val title= titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
+                val title = titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
                 TopBar(title = title) { navController.navigate(Routs.SearchedWallpaper) }
             }
         },
@@ -109,7 +109,9 @@ fun ScreenyApp() {
                 composable<Splash> {
                     SplashScreen {
                         navController.navigate(
-                            Home, navOptions = NavOptions.Builder().setPopUpTo(Splash, true).build()
+                            Home, navOptions =
+                            NavOptions.Builder()
+                                .setPopUpTo(Splash, true).build()
                         )
                     }
                 }
@@ -137,7 +139,8 @@ fun ScreenyApp() {
                     val categoryDetail: Routs.CategoryDetail = backStackEntry.toRoute()
                     category = categoryDetail.query
 
-                    CategoryDetailScreen(category, categoriesWiseWallpaperList, onBackClick = { navController.navigateUp() },
+                    CategoryDetailScreen(
+                        category, categoriesWiseWallpaperList, onBackClick = navController::navigateUp,
                         onWallpaperClick = { index ->
                             wallpaperCLick(
                                 index, categoriesWiseWallpaperList.itemSnapshotList.items, sharedWallpaperViewModel, navController
@@ -146,7 +149,8 @@ fun ScreenyApp() {
                 }
 
                 composable<Routs.SearchedWallpaper> {
-                    SearchedWallpaperScreen(onNavigateBack = { navController.navigateUp() },
+                    SearchedWallpaperScreen(
+                        onNavigateBack = navController::navigateUp,
                         onWallpaperClick = { index, list ->
                             wallpaperCLick(index, list, sharedWallpaperViewModel, navController)
                         })
@@ -161,10 +165,9 @@ fun ScreenyApp() {
                         sharedWallpaperViewModel = sharedWallpaperViewModel,
                         wallpapers = categoriesWallpaper,
                         index = index,
-                        currentlyLoadedWallpaper = currentlyLoadedWallpaper
-                    ) {
-                        navController.navigateUp()
-                    }
+                        currentlyLoadedWallpaper = currentlyLoadedWallpaper,
+                        onBack = navController::navigateUp
+                    )
                 }
 
                 composable<Routs.FavouriteDetail> { backStackEntry ->
@@ -173,13 +176,13 @@ fun ScreenyApp() {
                     FavouriteDetailScreen(
                         animatedVisibilityScope = this@composable,
                         wallpaper = CommonWallpaperEntity(wallpaperId, wallpaperUrl),
-                        navController = navController
+                        onBack = navController::navigateUp
                     )
                 }
 
 
                 composable<Routs.Language> {
-                    LanguageScreen(navController = navController)
+                    LanguageScreen(goBack = navController::navigateUp)
                 }
 
             }

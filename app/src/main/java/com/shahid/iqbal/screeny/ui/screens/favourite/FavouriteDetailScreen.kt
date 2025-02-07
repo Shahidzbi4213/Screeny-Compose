@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavController
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -37,7 +36,6 @@ import org.koin.compose.koinInject
  * allowing the user to view, download, apply, or remove it from favorites.
  *
  * @param modifier Modifier to customize the layout.
- * @param navController NavController to handle navigation.
  * @param animatedVisibilityScope AnimatedVisibilityScope for shared transitions.
  * @param wallpaper CommonWallpaperEntity representing the wallpaper details.
  */
@@ -45,12 +43,12 @@ import org.koin.compose.koinInject
 @Composable
 fun SharedTransitionScope.FavouriteDetailScreen(
     modifier: Modifier = Modifier,
-    navController: NavController,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    wallpaper: CommonWallpaperEntity
+    wallpaper: CommonWallpaperEntity,
+    onBack: () -> Unit,
 ) {
 
-    BackHandler { navController.navigateUp() }
+    BackHandler(onBack = onBack)
 
     val imageLoader = koinInject<ImageLoader>()
     val actionViewModel = koinViewModel<ActionViewModel>()

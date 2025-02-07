@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.ui.screens.settings.components.SingleLanguageItem
 import com.shahid.iqbal.screeny.ui.screens.settings.components.Toolbar
@@ -39,8 +37,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LanguageScreen(
     modifier: Modifier = Modifier,
-    navController: NavController,
-    languageViewModel: LanguageViewModel = koinViewModel()
+    languageViewModel: LanguageViewModel = koinViewModel(),
+    goBack: () -> Unit
 ) {
 
     val currentLanguage by languageViewModel.currentLanguage.collectAsStateWithLifecycle()
@@ -57,12 +55,11 @@ fun LanguageScreen(
 
 
         Toolbar(
-            onBackPress = navController::navigateUp,
+            onBackPress = goBack,
             isApplyEnable = localSelected != null && localSelected != currentLanguage,
             onApply = {
                 setUserSelectedLanguageForApp(context, localSelected!!.languageCode)
                 languageViewModel.updateCurrentLanguage(localSelected!!)
-                navController.navigateUp()
             }
         )
 
