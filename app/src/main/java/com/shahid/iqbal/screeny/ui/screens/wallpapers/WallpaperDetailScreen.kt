@@ -1,22 +1,15 @@
 package com.shahid.iqbal.screeny.ui.screens.wallpapers
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -56,14 +49,15 @@ import org.koin.compose.koinInject
 
 @Composable
 fun WallpaperDetailScreen(
-    sharedWallpaperViewModel: SharedWallpaperViewModel, actionViewModel: ActionViewModel = koinViewModel(), onBack: () -> Unit
+    sharedWallpaperViewModel: SharedWallpaperViewModel,
+    wallpapers: List<Wallpaper>,
+    index: Int,
+    currentlyLoadedWallpaper: Drawable?,
+    actionViewModel: ActionViewModel = koinViewModel(),
+    onBack: () -> Unit
 ) {
 
-
-    val wallpapers by sharedWallpaperViewModel.wallpaperList.collectAsStateWithLifecycle()
-    val index by sharedWallpaperViewModel.selectedWallpaperIndex.collectAsStateWithLifecycle()
     val favouriteList by actionViewModel.getAllFavourites.collectAsStateWithLifecycle()
-    val currentlyLoadedWallpaper by sharedWallpaperViewModel.currentWallpaper.collectAsStateWithLifecycle(initialValue = null)
     var canShowDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current

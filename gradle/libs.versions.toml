@@ -31,6 +31,7 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose"
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
 
 
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
@@ -52,14 +53,16 @@ compose-navigation = { module = "androidx.navigation:navigation-compose", versio
 
 
 [bundles]
-ktor-client = ["ktor-client-android",
+ktor-client = [
+    "ktor-client-android",
     "ktor-client-core",
     "ktor-client-serialization",
     "ktor-client-logging",
-    "ktor-content-negotiation"]
+    "ktor-content-negotiation"
+]
 
 
-koin = ["koin-core", "koin-compose"]
+koin = ["koin-core", "koin-compose", "koin-compose-viewmodel"]
 room-db = ["room-runtime", "room-ktx", "room-pagging"]
 
 

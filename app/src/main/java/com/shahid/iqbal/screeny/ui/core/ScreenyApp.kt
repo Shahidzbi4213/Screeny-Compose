@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
@@ -70,7 +71,6 @@ fun ScreenyApp() {
 
     val sharedWallpaperViewModel: SharedWallpaperViewModel = koinViewModel()
 
-
     ManageBarVisibility(
         currentEntry = { stackEntry },
         showTopBar = { canShowTopBar = it },
@@ -97,7 +97,7 @@ fun ScreenyApp() {
         SharedTransitionLayout() {
 
             NavHost(
-                navController = navController, startDestination = Routs.Settings,
+                navController = navController, startDestination = Settings,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
@@ -153,7 +153,16 @@ fun ScreenyApp() {
                 }
 
                 composable<Routs.WallpaperDetail> {
-                    WallpaperDetailScreen(sharedWallpaperViewModel) {
+                    val categoriesWallpaper by sharedWallpaperViewModel.wallpaperList.collectAsStateWithLifecycle()
+                    val index by sharedWallpaperViewModel.selectedWallpaperIndex.collectAsStateWithLifecycle()
+                    val currentlyLoadedWallpaper by sharedWallpaperViewModel.currentWallpaper.collectAsStateWithLifecycle(initialValue = null)
+
+                    WallpaperDetailScreen(
+                        sharedWallpaperViewModel = sharedWallpaperViewModel,
+                        wallpapers = categoriesWallpaper,
+                        index = index,
+                        currentlyLoadedWallpaper = currentlyLoadedWallpaper
+                    ) {
                         navController.navigateUp()
                     }
                 }
