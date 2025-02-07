@@ -130,7 +130,10 @@ fun ScreenyApp() {
                     }
                 }
 
-                composable<Favourite> { FavouriteScreen(navController = navController, animatedVisibilityScope = this@composable) }
+                composable<Favourite> {
+                    FavouriteScreen(animatedVisibilityScope = this@composable,
+                        onExplore = { navController.navigate(Routs.Home) })
+                }
 
                 composable<Settings> { SettingsScreen(navController) }
 

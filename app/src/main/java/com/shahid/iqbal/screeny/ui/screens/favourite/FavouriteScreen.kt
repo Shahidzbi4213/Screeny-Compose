@@ -3,21 +3,13 @@ package com.shahid.iqbal.screeny.ui.screens.favourite
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.safeGesturesPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -29,12 +21,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import com.shahid.iqbal.screeny.R
@@ -50,7 +40,7 @@ import org.koin.compose.koinInject
 fun SharedTransitionScope.FavouriteScreen(
     modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    navController: NavController
+    onExplore: () -> Unit
 ) {
 
     val favouriteViewModel = koinViewModel<FavouriteViewModel>()
@@ -59,8 +49,9 @@ fun SharedTransitionScope.FavouriteScreen(
 
 
     if (favourites.isEmpty()) {
-        NoFavouritePlaceholder(onExplore = { navController.navigate(Routs.Home) })
-    } else {        LazyVerticalGrid(
+        NoFavouritePlaceholder(onExplore = onExplore)
+    } else {
+        LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             contentPadding = PaddingValues(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -94,12 +85,14 @@ fun NoFavouritePlaceholder(onExplore: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
-            model =  R.drawable.no_favourite_found,
+            model = R.drawable.no_favourite_found,
             contentDescription = null,
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant),
-            modifier = Modifier.mirror().size(80.dp),
+            modifier = Modifier
+                .mirror()
+                .size(80.dp),
 
-        )
+            )
 
         Text(
             text = stringResource(R.string.your_favorite_wallpapers_will_appear_here_start_exploring_and_add_some_to_your_favorites),
@@ -111,15 +104,15 @@ fun NoFavouritePlaceholder(onExplore: () -> Unit) {
                 .padding(vertical = 20.dp)
         )
 
-       Pulsating {
-           Button(
-               onClick = onExplore,
-               modifier = Modifier.padding(top = 16.dp),
-               interactionSource = NoRippleInteractionSource()
-           ) {
-               Text(text = stringResource(R.string.explore_wallpapers))
-           }
-       }
+        Pulsating {
+            Button(
+                onClick = onExplore,
+                modifier = Modifier.padding(top = 16.dp),
+                interactionSource = NoRippleInteractionSource()
+            ) {
+                Text(text = stringResource(R.string.explore_wallpapers))
+            }
+        }
     }
 }
 
