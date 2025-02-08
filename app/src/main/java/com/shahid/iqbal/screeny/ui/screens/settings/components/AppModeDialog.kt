@@ -1,4 +1,4 @@
-package com.shahid.iqbal.screeny.ui.screens.settings.components;
+package com.shahid.iqbal.screeny.ui.screens.settings.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,49 +27,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.shahid.iqbal.screeny.R
+import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
 
 /**
- * Created by Shahid Iqbal on 29/1/25.
+ * Created by shahid-iqbal on 2/8/25
  */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DynamicColorDialog(
-    modifier: Modifier = Modifier,
-    shouldShowDynamicColor: Boolean,
-    onDismissRequest: () -> Unit,
-    onEnabled: () -> Unit,
-    onDisabled: () -> Unit
+fun AppModeDialog(
+    modifier: Modifier = Modifier, appMode: AppMode, onDismissRequest: () -> Unit, onSelect: (AppMode) -> Unit
 ) {
-
-
     ModalBottomSheet(
-        onDismissRequest = onDismissRequest,
-        modifier = modifier
-            .safeDrawingPadding()
+        onDismissRequest = onDismissRequest, modifier = modifier.safeDrawingPadding()
 
     ) {
-
-        DialogContent(
-            shouldShowDynamicColor = shouldShowDynamicColor,
-            onEnabled = onEnabled,
-            onDisabled = onDisabled,
-            onCancel = onDismissRequest
-        )
-
+        DialogContent(appMode, onSelect, onDismissRequest)
     }
 }
 
-
 @Composable
 private fun DialogContent(
-    shouldShowDynamicColor: Boolean,
-    onEnabled: () -> Unit,
-    onDisabled: () -> Unit,
-    onCancel: () -> Unit
+    appMode: AppMode,
+    onSelect: (AppMode) -> Unit,
+    onCancel: () -> Unit,
 ) {
 
-    var shouldEnable by remember { mutableStateOf(shouldShowDynamicColor) }
+    var currentMode by remember { mutableStateOf(appMode) }
 
     Column(
         modifier = Modifier
@@ -80,38 +64,28 @@ private fun DialogContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        DialogComponentItem(
-            text = stringResource(R.string.on),
-            isSelected = shouldEnable,
-            onClick = { shouldEnable = true }
-        )
+        DialogComponentItem(text = stringResource(R.string.system_default), isSelected = currentMode == AppMode.DEFAULT, onClick = { currentMode = AppMode.DEFAULT })
         Spacer(modifier = Modifier.height(10.dp))
 
-        DialogComponentItem(
-            text = stringResource(R.string.off),
-            isSelected = !shouldEnable,
-            onClick = { shouldEnable = false }
-        )
+        DialogComponentItem(text = stringResource(R.string.light), isSelected = currentMode == AppMode.LIGHT, onClick = { currentMode = AppMode.LIGHT })
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        DialogComponentItem(text = stringResource(R.string.dark), isSelected = currentMode == AppMode.DARK, onClick = { currentMode = AppMode.DARK })
+
 
         Spacer(modifier = Modifier.height(30.dp))
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp),
-            horizontalArrangement = Arrangement.Absolute.Right,
-            verticalAlignment = Alignment.CenterVertically
+                .height(40.dp), horizontalArrangement = Arrangement.Absolute.Right, verticalAlignment = Alignment.CenterVertically
         ) {
 
             TextButton(
-                onClick = onCancel,
-                modifier = Modifier.wrapContentSize(),
-                colors =
-                    ButtonDefaults.textButtonColors(
-                        contentColor =
-                            MaterialTheme.colorScheme
-                                .onSurface
-                    )
+                onClick = onCancel, modifier = Modifier.wrapContentSize(), colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurface
+                )
             ) {
                 Text(text = stringResource(id = R.string.cancel))
             }
@@ -119,10 +93,7 @@ private fun DialogContent(
             Spacer(modifier = Modifier.width(10.dp))
 
             TextButton(
-                onClick = {
-                    if (shouldEnable) onEnabled() else onDisabled()
-                },
-                modifier = Modifier.wrapContentSize()
+                onClick = { onSelect(currentMode) }, modifier = Modifier.wrapContentSize()
             ) {
                 Text(text = stringResource(id = R.string.apply))
             }
@@ -134,5 +105,3 @@ private fun DialogContent(
 
 
 }
-
-

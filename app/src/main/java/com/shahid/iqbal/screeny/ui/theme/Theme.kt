@@ -1,14 +1,18 @@
 package com.shahid.iqbal.screeny.ui.theme
 
 import android.os.Build
+import androidx.activity.compose.LocalActivity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFFBB86FC),  // Vibrant Purple
@@ -38,6 +42,18 @@ fun ScreenyTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
+    val view = LocalView.current
+    val activity = LocalActivity.current
+
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = activity?.window ?: return@SideEffect
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !darkTheme
+        }
+    }
+
 
     MaterialTheme(
         colorScheme = colorScheme,

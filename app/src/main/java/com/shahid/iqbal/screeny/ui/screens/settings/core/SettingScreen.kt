@@ -37,6 +37,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.ui.routs.Routs
+import com.shahid.iqbal.screeny.ui.screens.settings.components.AppModeDialog
 import com.shahid.iqbal.screeny.ui.screens.settings.components.DynamicColorDialog
 import com.shahid.iqbal.screeny.ui.screens.settings.components.RateUsDialog
 import com.shahid.iqbal.screeny.ui.screens.settings.components.SettingsItem
@@ -57,6 +58,7 @@ fun SettingsScreen(
 
     val userPreference by settingViewModel.userPreference.collectAsStateWithLifecycle()
     val showDynamicDialog by settingViewModel.shouldShowDynamicDialog.collectAsStateWithLifecycle()
+    val showAppModeDialog by settingViewModel.shouldShowAppModeDialog.collectAsStateWithLifecycle()
 
     var showRateUsDialog by remember { mutableStateOf(false) }
     val activity = LocalActivity.current
@@ -131,7 +133,7 @@ fun SettingsScreen(
                         AppMode.DEFAULT -> stringResource(R.string.system_default)
                     },
                     icon = R.drawable.app_mode,
-                    onClick = {}
+                    onClick = settingViewModel::updateAppModeDialog
                 )
             }
 
@@ -208,7 +210,7 @@ fun SettingsScreen(
     if (showDynamicDialog) {
         DynamicColorDialog(
             modifier = Modifier,
-            userPreference = userPreference,
+            shouldShowDynamicColor = userPreference.shouldShowDynamicColor,
             onDismissRequest = settingViewModel::updateDynamicDialog,
             onEnabled = {
                 with(settingViewModel) {
@@ -221,6 +223,18 @@ fun SettingsScreen(
                     updateDynamicColor(false)
                     updateDynamicDialog()
                 }
+            }
+        )
+    }
+
+    if (showAppModeDialog) {
+        AppModeDialog(
+            modifier = Modifier,
+            appMode = userPreference.appMode,
+            onDismissRequest = settingViewModel::updateAppModeDialog,
+            onSelect = {
+                settingViewModel.updateAppMode(it)
+                settingViewModel.updateAppModeDialog()
             }
         )
     }

@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
             val userPreference by settingViewModel.userPreference.collectAsStateWithLifecycle()
             val isDarkMode = currentAppMode(userPreference.appMode)
 
+
             ScreenyTheme(
                 dynamicColor = userPreference.shouldShowDynamicColor,
                 darkTheme = isDarkMode
