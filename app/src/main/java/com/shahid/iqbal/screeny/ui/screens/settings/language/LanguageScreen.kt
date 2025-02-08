@@ -60,6 +60,7 @@ fun LanguageScreen(
             onApply = {
                 setUserSelectedLanguageForApp(context, localSelected!!.languageCode)
                 languageViewModel.updateCurrentLanguage(localSelected!!)
+                goBack()
             }
         )
 
