@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -110,7 +111,10 @@ fun NoFavouritePlaceholder(onExplore: () -> Unit) {
                 modifier = Modifier.padding(top = 16.dp),
                 interactionSource = NoRippleInteractionSource()
             ) {
-                Text(text = stringResource(R.string.explore_wallpapers))
+                Text(
+                    text = stringResource(R.string.explore_wallpapers),
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
+                )
             }
         }
     }
