@@ -28,7 +28,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import com.shahid.iqbal.screeny.R
-import com.shahid.iqbal.screeny.ui.routs.Routs
 import com.shahid.iqbal.screeny.ui.utils.NoRippleInteractionSource
 import com.shahid.iqbal.screeny.utils.Extensions.Pulsating
 import com.shahid.iqbal.screeny.utils.Extensions.mirror
@@ -40,7 +39,8 @@ import org.koin.compose.koinInject
 fun SharedTransitionScope.FavouriteScreen(
     modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    onExplore: () -> Unit
+    onExplore: () -> Unit,
+    onWallpaperClick: (Long, String) -> Unit
 ) {
 
     val favouriteViewModel = koinViewModel<FavouriteViewModel>()
@@ -65,7 +65,7 @@ fun SharedTransitionScope.FavouriteScreen(
                 FavouriteWallpaperItem(
                     wallpaper = favourite.wallpaper, imageLoader = imageLoader,
                     animatedVisibilityScope = animatedVisibilityScope,
-                    onWallpaperClick = { wallpaper -> navController.navigate(Routs.FavouriteDetail(favourite.id, wallpaper)) },
+                    onWallpaperClick = { wallpaper -> onWallpaperClick(favourite.id, wallpaper) },
                     onRemoveFromFavClick = { wallpaper -> favouriteViewModel.removeFromFavourite(wallpaper) }
                 )
             }

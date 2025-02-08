@@ -124,6 +124,7 @@ fun ScreenyApp() {
                     }, onBack = { exitProcess(0) })
                 }
 
+
                 composable<Categories> {
                     CategoryScreen { category ->
                         navController.navigate(Routs.CategoryDetail(category))
@@ -132,7 +133,10 @@ fun ScreenyApp() {
 
                 composable<Favourite> {
                     FavouriteScreen(animatedVisibilityScope = this@composable,
-                        onExplore = { navController.navigate(Routs.Home) })
+                        onExplore = { navController.navigate(Routs.Home) },
+                        onWallpaperClick = { id, wallpaper ->
+                            navController.navigate(Routs.FavouriteDetail(id, wallpaper))
+                        })
                 }
 
                 composable<Settings> { SettingsScreen(navController) }
@@ -146,7 +150,10 @@ fun ScreenyApp() {
                         category, categoriesWiseWallpaperList, onBackClick = navController::navigateUp,
                         onWallpaperClick = { index ->
                             wallpaperCLick(
-                                index, categoriesWiseWallpaperList.itemSnapshotList.items, sharedWallpaperViewModel, navController
+                                index,
+                                categoriesWiseWallpaperList.itemSnapshotList.items,
+                                sharedWallpaperViewModel,
+                                navController
                             )
                         })
                 }
