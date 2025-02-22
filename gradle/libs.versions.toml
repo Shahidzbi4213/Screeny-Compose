@@ -6,12 +6,12 @@ kotlin = "2.0.20"
 coreKtx = "1.15.0"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
-composeBom = "2025.01.01"
+composeBom = "2025.02.00"
 kspVersion = "2.0.20-1.0.25"
 ktor = "2.3.12"
 roomVersion = "2.6.1"
-pager3Version = "3.3.5"
-composeNavigationVersion = "2.8.6"
+pager3Version = "3.3.6"
+composeNavigationVersion = "2.8.7"
 
 
 [libraries]
@@ -60,6 +60,11 @@ ktor-client = [
     "ktor-content-negotiation"
 ]
 
+
+compose-essentials = [
+    "androidx-ui", "androidx-ui-graphics",
+    "androidx-ui-tooling", "androidx-ui-tooling-preview"
+]
 
 koin = ["koin-core", "koin-compose"]
 room-db = ["room-runtime", "room-ktx", "room-pagging"]

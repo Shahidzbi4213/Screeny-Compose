@@ -42,32 +42,24 @@ android {
         buildConfigField("String", "API_KEY", apiKey)
 
         resourceConfigurations += mutableSetOf(
-            "en", "ar", "ru", "in", "bn", "hi", "uk", "vi", "ko", "ja", "zh", "sv",
-            "pl", "ms", "fr", "it", "fa", "tr", "th", "pt", "es", "de",
-            "nl", "ta", "cs", "ur"
+            "en", "ar", "ru", "in", "bn", "hi", "uk", "vi", "ko", "ja", "zh", "sv", "pl", "ms", "fr", "it", "fa", "tr", "th", "pt", "es", "de", "nl", "ta", "cs", "ur"
         )
 
     }
 
     buildTypes {
 
-        debug {
-            isMinifyEnabled = false
-            isShrinkResources = false
-            isDebuggable = true
-        }
-
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
         }
     }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -96,10 +88,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling)
-    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.bundles.compose.essentials)
     implementation(libs.androidx.material3)
 
     //lifecycle-compose

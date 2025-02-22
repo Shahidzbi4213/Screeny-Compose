@@ -1,6 +1,5 @@
 package com.shahid.iqbal.screeny.ui.screens.components
 
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,9 +17,9 @@ import kotlin.math.absoluteValue
 
 @Composable
 fun SinglePageContent(
-    wallpaperUrl: String, imageLoader: ImageLoader,
+    wallpaperUrl: String,
+    imageLoader: ImageLoader,
     pagerState: PagerState, page: Int,
-    updateWallpaper: (Drawable) -> Unit
 ) {
 
 
@@ -33,14 +32,11 @@ fun SinglePageContent(
 
 
         WallpaperItem(
-            wallpaper = wallpaperUrl, imageLoader = imageLoader, modifier = Modifier
+            wallpaper = wallpaperUrl,
+            isForApply = true,
+            imageLoader = imageLoader, modifier = Modifier
                 .fillMaxHeight(0.7f)
-                .fillMaxWidth(),
-            getDrawable = {
-                if (page == pagerState.currentPage) {
-                    updateWallpaper(it)
-                }
-            }
+                .fillMaxWidth()
         )
     }
 }

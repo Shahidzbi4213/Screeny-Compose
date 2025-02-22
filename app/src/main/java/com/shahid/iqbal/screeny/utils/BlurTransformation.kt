@@ -1,43 +1,19 @@
-package com.shahid.iqbal.screeny.ui.utils
-
 import android.graphics.Bitmap
-import coil.size.Size
-import coil.transform.Transformation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class BlurTransformation(
-    private val radius: Int = 25,
-    private val scale: Float = 0.5f
-) : Transformation {
 
-    override val cacheKey: String = "${javaClass.name}-$radius"
-
-    override suspend fun transform(
-        input: Bitmap,
-        size: Size
-    ): Bitmap = input.blur(scale, radius) ?: input
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        return other is BlurTransformation && radius == other.radius
-    }
-
-    override fun hashCode(): Int = radius.hashCode()
-
-}
-
-private suspend fun Bitmap.blur(
+suspend fun Bitmap.blur(
     scale: Float,
     radius: Int
-): Bitmap? = withContext(Dispatchers.Default) {
+): Bitmap? = withContext(Dispatchers.IO) {
     var sentBitmap = this@blur
     val width = (sentBitmap.width * scale).roundToInt()
     val height = (sentBitmap.height * scale).roundToInt()
     sentBitmap = Bitmap.createScaledBitmap(sentBitmap, width, height, false)
-    val bitmap = sentBitmap.config?.let { sentBitmap.copy(it, true) } ?: return@withContext null
+    val bitmap = sentBitmap.copy(sentBitmap.config ?: return@withContext null, true)
     if (radius < 1) {
         return@withContext null
     }

@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -40,7 +41,6 @@ import com.shahid.iqbal.screeny.models.Wallpaper
 import com.shahid.iqbal.screeny.ui.screens.components.ActionButtons
 import com.shahid.iqbal.screeny.ui.screens.components.BlurBg
 import com.shahid.iqbal.screeny.ui.screens.components.SinglePageContent
-import com.shahid.iqbal.screeny.ui.shared.SharedWallpaperViewModel
 import com.shahid.iqbal.screeny.ui.theme.ActionIconBgColor
 import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.noRippleClickable
 import kotlinx.coroutines.delay
@@ -49,12 +49,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun WallpaperDetailScreen(
-    sharedWallpaperViewModel: SharedWallpaperViewModel,
-    wallpapers: List<Wallpaper>,
-    index: Int,
-    currentlyLoadedWallpaper: Drawable?,
-    actionViewModel: ActionViewModel = koinViewModel(),
-    onBack: () -> Unit
+    wallpapers: List<Wallpaper>, index: Int, imageLoader: ImageLoader = koinInject<ImageLoader>(), actionViewModel: ActionViewModel = koinViewModel(), onBack: () -> Unit
 ) {
 
     val favouriteList by actionViewModel.getAllFavourites.collectAsStateWithLifecycle()
@@ -62,18 +57,24 @@ fun WallpaperDetailScreen(
 
     val context = LocalContext.current
 
-
-    val imageLoader = koinInject<ImageLoader>()
     val pagerState = rememberPagerState(initialPage = if (index != -1) index else 0) { wallpapers.size }
+    var current by remember { mutableIntStateOf(index) }
+
 
     var canShowList by remember { mutableStateOf(false) }
     var isFavourite by remember { mutableStateOf(false) }
+    var currentlyLoadedWallpaper = remember { mutableStateOf<Drawable?>(null) }
 
 
     LaunchedEffect(key1 = canShowList) {
         delay(100)
         canShowList = true
     }
+
+    LaunchedEffect(pagerState.settledPage) {
+        current += 1
+    }
+
 
     if (!canShowList) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -88,12 +89,11 @@ fun WallpaperDetailScreen(
     ) {
 
         Box(
-            contentAlignment = Alignment.BottomCenter, modifier = Modifier
-                .fillMaxSize()
+            contentAlignment = Alignment.BottomCenter, modifier = Modifier.fillMaxSize()
 
         ) {
 
-            BlurBg(wallpapers[pagerState.currentPage].wallpaperSource.portrait)
+            BlurBg(wallpapers[pagerState.currentPage].wallpaperSource.portrait, onLoaded = { currentlyLoadedWallpaper.value = it })
 
             Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, modifier = Modifier
                 .padding(start = 10.dp, top = 50.dp)
@@ -110,18 +110,12 @@ fun WallpaperDetailScreen(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(horizontal = 20.dp),
-                beyondViewportPageCount = 3,
+                beyondViewportPageCount = 0,
                 key = { wallpapers[it].id },
             ) { page ->
 
-
-                if (page == pagerState.currentPage) {
-                    isFavourite = favouriteList.any { it.id == wallpapers[pagerState.currentPage].id }
-
-                }
-
                 SinglePageContent(
-                    wallpaperUrl = wallpapers[page].wallpaperSource.portrait, imageLoader = imageLoader, pagerState = pagerState, page = page, updateWallpaper = sharedWallpaperViewModel::updateWallpaper
+                    wallpaperUrl = wallpapers[page].wallpaperSource.portrait, imageLoader = imageLoader, pagerState = pagerState, page = page
                 )
             }
 
@@ -138,7 +132,7 @@ fun WallpaperDetailScreen(
             })
         }
 
-        if (canShowDialog) WallpaperApplyDialog(wallpaper = currentlyLoadedWallpaper, onDismissRequest = { canShowDialog = false })
+        if (canShowDialog) WallpaperApplyDialog(wallpaper = currentlyLoadedWallpaper.value, onDismissRequest = { canShowDialog = false })
 
     }
 

@@ -1,6 +1,5 @@
 package com.shahid.iqbal.screeny.ui.shared
 
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shahid.iqbal.screeny.models.Wallpaper
@@ -19,26 +18,11 @@ class SharedWallpaperViewModel() : ViewModel() {
     val selectedWallpaperIndex get() = _selectedWallpaperIndex.asStateFlow()
 
 
-    private val _currentlyLoadedWallpaper = MutableStateFlow<Drawable?>(null)
-    val currentWallpaper get() = _currentlyLoadedWallpaper.asStateFlow()
-
-
-
-    fun updateWallpaper(drawable: Drawable) {
-        viewModelScope.launch {
-            _currentlyLoadedWallpaper.update { drawable }
-        }
-    }
-
-    fun updateWallpaperList(wallpapers: List<Wallpaper>) {
+    fun updateWallpaperDetails(wallpaper: Wallpaper, wallpapers: List<Wallpaper>) {
         viewModelScope.launch {
             _wallpaperList.update { wallpapers }
-        }
-    }
+            _selectedWallpaperIndex.update { wallpapers.indexOf(wallpaper) }
 
-    fun updateSelectedWallpaper(wallpaper: Wallpaper?) {
-        viewModelScope.launch {
-            _selectedWallpaperIndex.update { wallpaperList.value.indexOf(wallpaper) }
         }
     }
 

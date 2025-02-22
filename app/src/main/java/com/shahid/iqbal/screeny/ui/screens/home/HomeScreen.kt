@@ -5,12 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -27,15 +25,17 @@ import org.koin.compose.koinInject
 fun HomeScreen(
     wallpapers: LazyPagingItems<Wallpaper>,
     modifier: Modifier = Modifier,
-    onWallpaperClick: (Int) -> Unit,
+    imageLoader: ImageLoader = koinInject<ImageLoader>(),
+    onWallpaperClick: (Wallpaper) -> Unit,
     onBack: () -> Unit
 ) {
 
-    val imageLoader: ImageLoader = koinInject()
-
     BackHandler { onBack() }
 
+    val state = rememberLazyGridState()
+
     LazyVerticalGrid(
+        state = state,
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(10.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -52,12 +52,12 @@ fun HomeScreen(
         }
 
 
-        items(wallpapers.itemCount, key = { "${wallpapers[it]?.id}_$it" }) { index ->
+        items(wallpapers.itemCount, key = { "${wallpapers[it]?.id}.${wallpapers[it]?.page}" }) { index ->
 
             val wallpaper = wallpapers[index]
             if (wallpaper != null) {
                 WallpaperItem(wallpaper = wallpaper.wallpaperSource.portrait, imageLoader = imageLoader) {
-                    onWallpaperClick(index)
+                    onWallpaperClick(wallpaper)
                 }
             }
         }

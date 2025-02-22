@@ -3,30 +3,26 @@ package com.shahid.iqbal.screeny.ui.screens.wallpapers
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.noRippleClickable
 import com.shahid.iqbal.screeny.ui.utils.NoRippleInteractionSource
+import com.shahid.iqbal.screeny.utils.Extensions.mirror
 import com.shahid.iqbal.screeny.utils.WallpaperManager
 import com.shahid.iqbal.screeny.utils.WallpaperType
 import org.koin.compose.koinInject
@@ -46,12 +43,12 @@ private const val LAST_INDEX = 2
 @Composable
 fun WallpaperApplyDialog(wallpaper: Drawable?, onDismissRequest: () -> Unit) {
 
+
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         modifier = Modifier
 
     ) {
-
         DialogContent(wallpaper, onDismissRequest)
     }
 }
@@ -81,7 +78,7 @@ private fun DialogContent(wallpaper: Drawable?, onCancel: () -> Unit) {
                 .padding(top = 20.dp, start = 10.dp, end = 10.dp)
                 .border(
                     shape = RoundedCornerShape(10.dp),
-                    border = BorderStroke(1.dp, DividerDefaults.color)
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -110,7 +107,10 @@ private fun DialogContent(wallpaper: Drawable?, onCancel: () -> Unit) {
                 .padding(top = 10.dp, bottom = 5.dp),
             interactionSource = NoRippleInteractionSource()
         ) {
-            Text(text = stringResource(id = R.string.cancel), modifier = Modifier.background(Color.Transparent))
+            Text(
+                text = stringResource(id = R.string.cancel),
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+            )
         }
 
 
@@ -139,10 +139,12 @@ private fun SingleActionItem(
             painter = painterResource(id = wallpaperActionItem.icon),
             contentDescription = null,
             modifier = Modifier
+                .mirror()
                 .size(35.dp)
                 .padding(end = if (index == LAST_INDEX) 6.dp else 0.dp),
-            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onSecondaryContainer)
+            colorFilter = ColorFilter.tint(color = LocalContentColor.current)
         )
+
 
         Text(
             text = stringResource(id = wallpaperActionItem.title),

@@ -23,6 +23,7 @@ fun WallpaperItem(
     modifier: Modifier = Modifier,
     wallpaper: String,
     imageLoader: ImageLoader,
+    isForApply: Boolean = false,
     getDrawable: ((Drawable) -> Unit)? = null,
     onWallpaperClick: (String) -> Unit = {}
 ) {
@@ -36,8 +37,11 @@ fun WallpaperItem(
         imageLoader = imageLoader,
         onSuccess = { success ->
             showShimmer = false
-            val drawable = success.result.drawable
-            getDrawable?.invoke(drawable)
+
+            if (isForApply) {
+                val drawable = success.result.drawable
+                getDrawable?.invoke(drawable)
+            }
 
         },
         modifier = modifier
@@ -51,7 +55,6 @@ fun WallpaperItem(
             .noRippleClickable { onWallpaperClick(wallpaper) }
 
     )
-
 
 
 }

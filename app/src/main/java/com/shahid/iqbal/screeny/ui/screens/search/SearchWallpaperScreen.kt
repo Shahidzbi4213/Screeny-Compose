@@ -58,7 +58,6 @@ import coil.ImageLoader
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.models.RecentSearch
 import com.shahid.iqbal.screeny.models.Wallpaper
-import com.shahid.iqbal.screeny.ui.core.MainActivity
 import com.shahid.iqbal.screeny.ui.screens.components.Footer
 import com.shahid.iqbal.screeny.ui.screens.components.LoadingPlaceHolder
 import com.shahid.iqbal.screeny.ui.screens.components.WallpaperItem
@@ -71,7 +70,7 @@ import org.koin.compose.koinInject
 @Composable
 fun SearchedWallpaperScreen(
     onNavigateBack: () -> Unit,
-    onWallpaperClick: (Int, List<Wallpaper>) -> Unit,
+    onWallpaperClick: (Wallpaper, List<Wallpaper>) -> Unit,
 ) {
 
     val imageLoader = koinInject<ImageLoader>()
@@ -221,7 +220,7 @@ private fun RecentSearches(
 
 @Composable
 fun ShowWallpapers(
-    wallpapers: LazyPagingItems<Wallpaper>, imageLoader: ImageLoader, onWallpaperClick: (indexOf: Int, items: List<Wallpaper>) -> Unit
+    wallpapers: LazyPagingItems<Wallpaper>, imageLoader: ImageLoader, onWallpaperClick: (Wallpaper: Wallpaper, items: List<Wallpaper>) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -243,7 +242,7 @@ fun ShowWallpapers(
                 if (wallpaper != null) {
                     WallpaperItem(wallpaper = wallpaper.wallpaperSource.portrait, imageLoader = imageLoader) {
                         onWallpaperClick(
-                            wallpapers.itemSnapshotList.items.indexOf(wallpaper),
+                            wallpaper,
                             wallpapers.itemSnapshotList.items
                         )
                     }

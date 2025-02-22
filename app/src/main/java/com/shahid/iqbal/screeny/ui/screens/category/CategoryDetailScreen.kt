@@ -41,7 +41,7 @@ import org.koin.compose.koinInject
 fun CategoryDetailScreen(
     title: String,
     wallpapers: LazyPagingItems<Wallpaper>,
-    onWallpaperClick: (Int) -> Unit,
+    onWallpaperClick: (Wallpaper) -> Unit,
     onBackClick: () -> Unit
 ) {
 
@@ -81,7 +81,7 @@ fun CategoryDetailScreen(
                         wallpaper = wallpaper.wallpaperSource.portrait,
                         imageLoader = imageLoader
                     ) {
-                        onWallpaperClick(index)
+                        onWallpaperClick(wallpaper)
                     }
                 }
             }
