@@ -75,6 +75,14 @@ Contributions are welcome! Follow these steps to add new features or fix bugs:
 
 ---
 
+## Possible improvements and areas of development
+   - settings screen UI change
+   - navigation imrprovement
+   - add more categories
+   - search feature seamless enhancement
+
+---
+
 ## Suggestions and Feedback
 
 This project is open-source and thrives on community input. Feel free to:
