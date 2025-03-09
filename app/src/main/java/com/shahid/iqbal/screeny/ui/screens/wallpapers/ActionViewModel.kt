@@ -6,6 +6,7 @@ import com.shahid.iqbal.screeny.data.repositories.FavouriteRepo
 import com.shahid.iqbal.screeny.models.CommonWallpaperEntity
 import com.shahid.iqbal.screeny.utils.WallpaperDownloader
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -15,13 +16,16 @@ class ActionViewModel(
 ) : ViewModel() {
 
 
-    val getAllFavourites
-        get() = favouriteRepo.getAllFavourites.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val getAllFavourites = favouriteRepo.getAllFavourites
+        .distinctUntilChanged()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
 
     fun addOrRemove(wallpaper: CommonWallpaperEntity) {
-        viewModelScope.launch {
-            favouriteRepo.addOrRemove(wallpaper)
-        }
+        viewModelScope.launch { favouriteRepo.addOrRemove(wallpaper) }
     }
 
 

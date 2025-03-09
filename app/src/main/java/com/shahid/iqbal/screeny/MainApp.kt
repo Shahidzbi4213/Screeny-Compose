@@ -12,15 +12,14 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
-class ScreenyApplication : Application() {
+class MainApp : Application() {
 
 
     override fun onCreate() {
         super.onCreate()
 
-
         startKoin {
-            androidContext(this@ScreenyApplication)
+            androidContext(this@MainApp)
             androidLogger(Level.ERROR)
             modules(
                 appModule,
@@ -33,4 +32,6 @@ class ScreenyApplication : Application() {
         }
 
     }
+
+
 }

@@ -19,13 +19,12 @@ import com.shahid.iqbal.screeny.models.Wallpaper
 import com.shahid.iqbal.screeny.ui.screens.components.Footer
 import com.shahid.iqbal.screeny.ui.screens.components.LoadingPlaceHolder
 import com.shahid.iqbal.screeny.ui.screens.components.WallpaperItem
-import org.koin.compose.koinInject
 
 @Composable
 fun HomeScreen(
     wallpapers: LazyPagingItems<Wallpaper>,
     modifier: Modifier = Modifier,
-    imageLoader: ImageLoader = koinInject<ImageLoader>(),
+    imageLoader: ImageLoader,
     onWallpaperClick: (Wallpaper) -> Unit,
     onBack: () -> Unit
 ) {
@@ -56,7 +55,10 @@ fun HomeScreen(
 
             val wallpaper = wallpapers[index]
             if (wallpaper != null) {
-                WallpaperItem(wallpaper = wallpaper.wallpaperSource.portrait, imageLoader = imageLoader) {
+                WallpaperItem(
+                    wallpaper = wallpaper.wallpaperSource.portrait,
+                    imageLoader = imageLoader
+                ) {
                     onWallpaperClick(wallpaper)
                 }
             }

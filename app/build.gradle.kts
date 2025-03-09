@@ -25,7 +25,7 @@ android {
 
 
     defaultConfig {
-        applicationId = "com.shahid.iqbal.screeny"
+        applicationId = "com.wallpapers.screeny"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -74,6 +74,7 @@ android {
     }
 
 
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -113,6 +114,6 @@ dependencies {
 
     //Navigation Library
     implementation(libs.compose.navigation)
-
+    
 
 }

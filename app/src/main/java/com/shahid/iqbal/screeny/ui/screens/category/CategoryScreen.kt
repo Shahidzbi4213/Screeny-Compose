@@ -42,14 +42,16 @@ import com.shahid.iqbal.screeny.ui.theme.screenyFontFamily
 import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.noRippleClickable
 import com.shahid.iqbal.screeny.utils.Extensions.toPx
 import kotlinx.coroutines.delay
-import org.koin.compose.koinInject
 
 
 @Composable
-fun CategoryScreen(modifier: Modifier = Modifier, onCategoryClick: (String) -> Unit) {
+fun CategoryScreen(
+    modifier: Modifier = Modifier,
+    imageLoader: ImageLoader,
+    onCategoryClick: (String) -> Unit
+) {
 
     var showContent by remember { mutableStateOf(false) }
-    val imageLoader: ImageLoader = koinInject()
 
     LaunchedEffect(key1 = Unit) {
         delay(250)

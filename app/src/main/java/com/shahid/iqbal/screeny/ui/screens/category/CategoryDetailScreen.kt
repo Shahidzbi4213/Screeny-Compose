@@ -35,17 +35,16 @@ import com.shahid.iqbal.screeny.ui.screens.components.LoadingPlaceHolder
 import com.shahid.iqbal.screeny.ui.screens.components.WallpaperItem
 import com.shahid.iqbal.screeny.ui.theme.screenyFontFamily
 import com.shahid.iqbal.screeny.ui.utils.ComponentHelpers.noRippleClickable
-import org.koin.compose.koinInject
 
 @Composable
 fun CategoryDetailScreen(
     title: String,
+    imageLoader: ImageLoader,
     wallpapers: LazyPagingItems<Wallpaper>,
     onWallpaperClick: (Wallpaper) -> Unit,
     onBackClick: () -> Unit
 ) {
 
-    val imageLoader: ImageLoader = koinInject()
 
     Column(
         modifier = Modifier

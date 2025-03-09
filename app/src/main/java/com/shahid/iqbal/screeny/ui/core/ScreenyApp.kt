@@ -1,6 +1,5 @@
 package com.shahid.iqbal.screeny.ui.core
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.WindowInsets
@@ -23,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import androidx.paging.compose.collectAsLazyPagingItems
+import coil.ImageLoader
 import com.shahid.iqbal.screeny.models.CommonWallpaperEntity
 import com.shahid.iqbal.screeny.models.Wallpaper
 import com.shahid.iqbal.screeny.ui.routs.Routs
@@ -48,28 +48,33 @@ import com.shahid.iqbal.screeny.ui.screens.splash.SplashScreen
 import com.shahid.iqbal.screeny.ui.screens.wallpapers.WallpaperDetailScreen
 import com.shahid.iqbal.screeny.ui.shared.SharedWallpaperViewModel
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 import kotlin.system.exitProcess
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ScreenyApp() {
 
 
     val navController = rememberNavController()
+
+
     var canShowBottomBar by rememberSaveable { mutableStateOf(false) }
     var canShowTopBar by rememberSaveable { mutableStateOf(false) }
+    var category by rememberSaveable { mutableStateOf("") }
+
     val stackEntry by navController.currentBackStackEntryAsState()
 
-
     val wallpaperViewModel: WallpaperViewModel = koinViewModel()
-    val wallpapers = wallpaperViewModel.getAllWallpapers.collectAsLazyPagingItems()
-
     val categoryViewModel: CategoryViewModel = koinViewModel()
-    var category by rememberSaveable { mutableStateOf("") }
+    val sharedWallpaperViewModel: SharedWallpaperViewModel = koinViewModel()
+
+
+    val wallpapers = wallpaperViewModel.getAllWallpapers.collectAsLazyPagingItems()
     val categoriesWiseWallpaperList = categoryViewModel.searchWallpapers(category).collectAsLazyPagingItems()
 
-    val sharedWallpaperViewModel: SharedWallpaperViewModel = koinViewModel()
+    val imageLoader = koinInject<ImageLoader>()
+
 
     ManageBarVisibility(
         currentEntry = { stackEntry },
@@ -79,17 +84,12 @@ fun ScreenyApp() {
 
 
     Scaffold(
-        bottomBar = { if (canShowBottomBar) BottomNavigationBar(navController) },
-        topBar = {
+        bottomBar = { if (canShowBottomBar) BottomNavigationBar(navController) }, topBar = {
             if (canShowTopBar) {
-
-
                 val title = titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
                 TopBar(title = title) { navController.navigate(Routs.SearchedWallpaper) }
             }
-        },
-        modifier = Modifier
-            .fillMaxSize(),
+        }, modifier = Modifier.fillMaxSize(),
 
         contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
@@ -101,42 +101,38 @@ fun ScreenyApp() {
         ) {
 
             NavHost(
-                navController = navController, startDestination = Splash,
-                modifier = Modifier
+                navController = navController, startDestination = Splash, modifier = Modifier
             ) {
 
 
                 composable<Splash> {
                     SplashScreen {
                         navController.navigate(
-                            Home, navOptions =
-                            NavOptions.Builder()
-                                .setPopUpTo(Splash, true).build()
+                            Home, navOptions = NavOptions.Builder().setPopUpTo(Splash, true).build()
                         )
                     }
                 }
 
                 composable<Home> {
-                    HomeScreen(wallpapers, onWallpaperClick = { wallpaper ->
+                    HomeScreen(wallpapers, imageLoader = imageLoader, onWallpaperClick = { wallpaper ->
                         wallpaperCLick(
-                            wallpaper,
-                            wallpapers.itemSnapshotList.items,
-                            sharedWallpaperViewModel,
-                            navController
+                            wallpaper, wallpapers.itemSnapshotList.items, sharedWallpaperViewModel, navController
                         )
+
                     }, onBack = { exitProcess(0) })
                 }
 
 
                 composable<Categories> {
-                    CategoryScreen { category ->
+                    CategoryScreen(imageLoader = imageLoader) { category ->
                         navController.navigate(Routs.CategoryDetail(category))
                     }
                 }
 
                 composable<Favourite> {
-                    FavouriteScreen(animatedVisibilityScope = this@composable,
-                        onExplore = { navController.navigate(Routs.Home) },
+                    FavouriteScreen(
+                        imageLoader = imageLoader, animatedVisibilityScope = this@composable,
+                        onExplore = { navController.navigate(Home) },
                         onWallpaperClick = { id, wallpaper ->
                             navController.navigate(Routs.FavouriteDetail(id, wallpaper))
                         })
@@ -150,19 +146,19 @@ fun ScreenyApp() {
                     category = categoryDetail.query
 
                     CategoryDetailScreen(
-                        category, categoriesWiseWallpaperList, onBackClick = navController::navigateUp,
+                        category, imageLoader = imageLoader, categoriesWiseWallpaperList,
+                        onBackClick = navController::navigateUp,
                         onWallpaperClick = { wallpaper ->
                             wallpaperCLick(
-                                wallpaper,
-                                categoriesWiseWallpaperList.itemSnapshotList.items,
-                                sharedWallpaperViewModel,
-                                navController
+                                wallpaper, categoriesWiseWallpaperList.itemSnapshotList.items,
+                                sharedWallpaperViewModel, navController
                             )
                         })
                 }
 
                 composable<Routs.SearchedWallpaper> {
                     SearchedWallpaperScreen(
+                        imageLoader = imageLoader,
                         onNavigateBack = navController::navigateUp,
                         onWallpaperClick = { wallpaper, list ->
                             wallpaperCLick(wallpaper, list, sharedWallpaperViewModel, navController)
@@ -174,6 +170,7 @@ fun ScreenyApp() {
                     val index by sharedWallpaperViewModel.selectedWallpaperIndex.collectAsStateWithLifecycle()
 
                     WallpaperDetailScreen(
+                        imageLoader = imageLoader,
                         wallpapers = categoriesWallpaper,
                         index = index,
                         onBack = navController::navigateUp
@@ -198,6 +195,7 @@ fun ScreenyApp() {
             }
 
         }
+
     }
 
 

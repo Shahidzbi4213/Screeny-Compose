@@ -15,13 +15,10 @@ class SearchViewModel(
     private val searchRepo: SearchWallpapersRepository
 ) : ViewModel() {
 
-    val recentSearches = repo.recentSearches
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(3000), emptyList())
+    val recentSearches = repo.recentSearches.stateIn(viewModelScope, SharingStarted.WhileSubscribed(3000), emptyList())
 
-    fun searchWallpapers(query: String) =
-        searchRepo.getSearchWallpapers(query)
-            .flow
-            .cachedIn(viewModelScope)
+
+    fun searchWallpapers(query: String) = searchRepo.getSearchWallpapers(query).flow.cachedIn(viewModelScope)
 
 
     fun saveRecentSearch(query: String) {

@@ -33,20 +33,19 @@ import com.shahid.iqbal.screeny.ui.utils.NoRippleInteractionSource
 import com.shahid.iqbal.screeny.utils.Extensions.Pulsating
 import com.shahid.iqbal.screeny.utils.Extensions.mirror
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.koinInject
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.FavouriteScreen(
     modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
+    favouriteViewModel: FavouriteViewModel = koinViewModel(),
+    imageLoader: ImageLoader,
     onExplore: () -> Unit,
     onWallpaperClick: (Long, String) -> Unit
 ) {
 
-    val favouriteViewModel = koinViewModel<FavouriteViewModel>()
-    val favourites by favouriteViewModel.getAllFavourites.collectAsStateWithLifecycle(emptyList())
-    val imageLoader = koinInject<ImageLoader>()
+    val favourites by favouriteViewModel.getAllFavourites.collectAsStateWithLifecycle()
 
 
     if (favourites.isEmpty()) {
@@ -62,7 +61,10 @@ fun SharedTransitionScope.FavouriteScreen(
 
         ) {
 
-            items(favourites, key = { favourite -> favourite.timeStamp }) { favourite ->
+            items(
+                favourites,
+                key = { favourite -> favourite.timeStamp })
+            { favourite ->
                 FavouriteWallpaperItem(
                     wallpaper = favourite.wallpaper, imageLoader = imageLoader,
                     animatedVisibilityScope = animatedVisibilityScope,
