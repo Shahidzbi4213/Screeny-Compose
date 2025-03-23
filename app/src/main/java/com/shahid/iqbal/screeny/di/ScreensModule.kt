@@ -1,6 +1,7 @@
 package com.shahid.iqbal.screeny.di
 
 import com.shahid.iqbal.screeny.ui.screens.category.CategoryViewModel
+import com.shahid.iqbal.screeny.ui.screens.favourite.FavouriteDetailScreenViewModel
 import com.shahid.iqbal.screeny.ui.screens.favourite.FavouriteViewModel
 import com.shahid.iqbal.screeny.ui.screens.home.WallpaperViewModel
 import com.shahid.iqbal.screeny.ui.screens.search.SearchViewModel
@@ -23,6 +24,7 @@ val screensModule = module {
     viewModelOf(::SearchViewModel)
     viewModelOf(::SharedWallpaperViewModel)
     viewModelOf(::ActionViewModel)
+    viewModelOf(::FavouriteDetailScreenViewModel)
     viewModelOf(::FavouriteViewModel)
     viewModelOf(::LanguageViewModel)
     viewModelOf(::SettingViewModel)

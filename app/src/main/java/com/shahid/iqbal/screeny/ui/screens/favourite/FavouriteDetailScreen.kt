@@ -1,7 +1,6 @@
 package com.shahid.iqbal.screeny.ui.screens.favourite
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibilityScope
@@ -11,21 +10,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.shahid.iqbal.screeny.R
 import com.shahid.iqbal.screeny.models.CommonWallpaperEntity
 import com.shahid.iqbal.screeny.ui.screens.components.ActionButtons
 import com.shahid.iqbal.screeny.ui.screens.wallpapers.ActionViewModel
+import com.shahid.iqbal.screeny.ui.screens.wallpapers.UiEvents
 import com.shahid.iqbal.screeny.ui.screens.wallpapers.WallpaperApplyDialog
-import com.shahid.iqbal.screeny.utils.Extensions.debug
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -34,6 +31,7 @@ import org.koin.androidx.compose.koinViewModel
 fun SharedTransitionScope.FavouriteDetailScreen(
     modifier: Modifier = Modifier,
     actionViewModel: ActionViewModel = koinViewModel(),
+    detailVm: FavouriteDetailScreenViewModel = koinViewModel(),
     animatedVisibilityScope: AnimatedVisibilityScope,
     wallpaper: CommonWallpaperEntity,
     onBack: () -> Unit
@@ -41,9 +39,8 @@ fun SharedTransitionScope.FavouriteDetailScreen(
 
     BackHandler(onBack = onBack)
 
-    var canShowDialog by remember { mutableStateOf(false) }
-    var isFavourite by remember { mutableStateOf(true) }
-    var wallpaperDrawable: Drawable? by remember { mutableStateOf(null) }
+    val uiState by detailVm.state.collectAsStateWithLifecycle()
+
     val mContext = LocalContext.current
 
     Box(contentAlignment = Alignment.BottomCenter, modifier = modifier.fillMaxSize()) {
@@ -52,7 +49,7 @@ fun SharedTransitionScope.FavouriteDetailScreen(
             model = ImageRequest.Builder(mContext)
                 .data(wallpaper.url)
                 .listener(onSuccess = { _, res ->
-                    wallpaperDrawable = res.drawable
+                    detailVm.onEvent(DetailScreenEvents.UpdateWallpaper(res.drawable))
                 })
                 .crossfade(false)
                 .placeholderMemoryCacheKey("image-${wallpaper.url}")
@@ -73,13 +70,12 @@ fun SharedTransitionScope.FavouriteDetailScreen(
 
         /** Action Buttons to download , apply or un-favourite wallpaper */
         ActionButtons(
-            isFavourite = isFavourite,
+            isFavourite = uiState.isFavourite,
             onApply = {
-                "lkfklfsdhklhklsdfh".debug()
-                canShowDialog = true
+                detailVm.onEvent(DetailScreenEvents.ToggleDialog(true))
             }, onFavourite = {
-                actionViewModel.addOrRemove(wallpaper = wallpaper)
-                isFavourite = !isFavourite
+                actionViewModel.onEvent(UiEvents.AddOrRemove(wallpaper))
+                detailVm.onEvent(DetailScreenEvents.ToggleFavourite)
             }, onDownload = {
                 downloadWallpaper(actionViewModel, wallpaperUrl = wallpaper.url, mContext)
             })
@@ -87,11 +83,13 @@ fun SharedTransitionScope.FavouriteDetailScreen(
 
 
     /** Dialog display on apply button press*/
-    if (canShowDialog) {
-        if (wallpaperDrawable != null) {
+    if (uiState.showDialog) {
+        if (uiState.wallpaperDrawable != null) {
             WallpaperApplyDialog(
-                wallpaper = wallpaperDrawable,
-                onDismissRequest = { canShowDialog = false })
+                wallpaper = uiState.wallpaperDrawable,
+                onDismissRequest = {
+                    detailVm.onEvent(DetailScreenEvents.ToggleDialog(false))
+                })
         }
     }
 }
@@ -100,6 +98,6 @@ fun SharedTransitionScope.FavouriteDetailScreen(
 private fun downloadWallpaper(
     actionViewModel: ActionViewModel, wallpaperUrl: String, context: Context
 ) {
-    actionViewModel.downloadWallpaper(url = wallpaperUrl)
+    actionViewModel.onEvent(UiEvents.DownloadWallpaper(wallpaperUrl))
     Toast.makeText(context, context.getString(R.string.downloading), Toast.LENGTH_SHORT).show()
 }

@@ -26,10 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -59,11 +56,11 @@ fun SearchedWallpaperScreen(
     searchViewModel: SearchViewModel = koinViewModel(),
     onWallpaperClick: (Wallpaper, List<Wallpaper>) -> Unit,
 ) {
-    var searchQuery by rememberSaveable { mutableStateOf("") }
-    var isExpanded by rememberSaveable { mutableStateOf(true) }
 
+
+    val state by searchViewModel.searchState.collectAsStateWithLifecycle()
     val recentSearches by searchViewModel.recentSearches.collectAsStateWithLifecycle()
-    val searchedWallpapers = searchViewModel.searchWallpapers(searchQuery).collectAsLazyPagingItems()
+    val searchedWallpapers = searchViewModel.searchWallpapers(state.searchQuery).collectAsLazyPagingItems()
 
     val localKeyboard = LocalSoftwareKeyboardController.current
     val localFocusManager = LocalFocusManager.current
@@ -81,26 +78,35 @@ fun SearchedWallpaperScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = if (!isExpanded) 20.dp else 0.dp),
-            windowInsets = if (isExpanded) {
+                .padding(horizontal = if (!state.isExpanded) 20.dp else 0.dp),
+            windowInsets = if (state.isExpanded) {
                 WindowInsets(0.dp)
             } else {
                 WindowInsets(top = 20.dp)
             },
             inputField = {
 
-                SearchField(searchQuery = searchQuery, isExpanded = isExpanded, focusRequester = focusRequester, onQueryChange = { query -> searchQuery = query }, clearQuery = { searchQuery = "" }, onExpandChange = { isExpanded = it }, onNavigateBack = onNavigateBack, saveSearchQuery = {
-                    searchViewModel.saveRecentSearch(it)
-                    localKeyboard?.hide()
-                    localFocusManager.clearFocus(true)
-                }
+                with(searchViewModel) {
+                    SearchField(
+                        searchQuery = state.searchQuery, isExpanded = state.isExpanded,
+                        focusRequester = focusRequester,
+                        onQueryChange = { onEvent(SearchEvent.OnQueryChange(it)) },
+                        clearQuery = { onEvent(SearchEvent.ClearQuery) },
+                        onExpandChange = { onEvent(SearchEvent.OnExpandChange(it)) },
+                        onNavigateBack = onNavigateBack,
+                        saveSearchQuery = {
+                            onEvent(SearchEvent.SaveRecentSearch(it))
+                            localKeyboard?.hide()
+                            localFocusManager.clearFocus(true)
+                        }
 
-                )
+                    )
+                }
             },
-            expanded = isExpanded,
-            onExpandedChange = { isExpanded = it },
+            expanded = state.isExpanded,
+            onExpandedChange = { searchViewModel.onEvent(SearchEvent.OnExpandChange(it)) },
             colors = SearchBarDefaults.colors(
-                containerColor = if (isExpanded) {
+                containerColor = if (state.isExpanded) {
                     MaterialTheme.colorScheme.background
                 } else {
                     MaterialTheme.colorScheme.surfaceContainerHigh
@@ -109,11 +115,11 @@ fun SearchedWallpaperScreen(
             tonalElevation = 0.dp,
         ) {
             RecentSearches(recentSearches, onRecentItemClick = {
-                searchQuery = it
+                searchViewModel.onEvent(SearchEvent.OnQueryChange(it))
                 localKeyboard?.show()
                 focusRequester.requestFocus()
             }, clearAll = {
-                searchViewModel.clearAllRecent()
+                searchViewModel.onEvent(SearchEvent.ClearAllRecent)
             })
         }
 
@@ -125,9 +131,7 @@ fun SearchedWallpaperScreen(
 
 @Composable
 private fun RecentSearches(
-    recentSearches: List<RecentSearch>,
-    onRecentItemClick: (String) -> Unit,
-    clearAll: () -> Unit
+    recentSearches: List<RecentSearch>, onRecentItemClick: (String) -> Unit, clearAll: () -> Unit
 ) {
 
     Column(
@@ -143,9 +147,7 @@ private fun RecentSearches(
             ) {
                 Text(
                     text = stringResource(id = R.string.recent_searchs),
-                    fontFamily = screenyFontFamily,
-                    style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
-                    modifier = Modifier.weight(1f)
+                    fontFamily = screenyFontFamily, style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant), modifier = Modifier.weight(1f)
                 )
 
                 TextButton(onClick = clearAll) {
@@ -158,9 +160,7 @@ private fun RecentSearches(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(vertical = 10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(15.dp)
+                .padding(vertical = 10.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
 
             items(recentSearches) {

@@ -42,7 +42,9 @@ android {
         buildConfigField("String", "API_KEY", apiKey)
 
         resourceConfigurations += mutableSetOf(
-            "en", "ar", "ru", "in", "bn", "hi", "uk", "vi", "ko", "ja", "zh", "sv", "pl", "ms", "fr", "it", "fa", "tr", "th", "pt", "es", "de", "nl", "ta", "cs", "ur"
+            "en", "ar", "ru", "in", "bn", "hi", "uk",
+            "vi", "ko", "ja", "zh", "sv", "pl", "ms", "fr",
+            "it", "fa", "tr", "th", "pt", "es", "de", "nl", "ta", "cs", "ur"
         )
 
     }
