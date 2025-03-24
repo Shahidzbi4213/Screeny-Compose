@@ -22,9 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -43,7 +40,6 @@ import com.shahid.iqbal.screeny.ui.screens.settings.components.RateUsDialog
 import com.shahid.iqbal.screeny.ui.screens.settings.components.SettingsItem
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
 import com.shahid.iqbal.screeny.ui.screens.settings.utils.findLanguageByCode
-import com.shahid.iqbal.screeny.utils.Extensions.debug
 import com.shahid.iqbal.screeny.utils.Extensions.rateUs
 import org.koin.androidx.compose.koinViewModel
 import java.util.Locale
@@ -57,10 +53,8 @@ fun SettingsScreen(
 ) {
 
     val userPreference by settingViewModel.userPreference.collectAsStateWithLifecycle()
-    val showDynamicDialog by settingViewModel.shouldShowDynamicDialog.collectAsStateWithLifecycle()
-    val showAppModeDialog by settingViewModel.shouldShowAppModeDialog.collectAsStateWithLifecycle()
+    val state by settingViewModel.state.collectAsStateWithLifecycle()
 
-    var showRateUsDialog by remember { mutableStateOf(false) }
     val activity = LocalActivity.current
     val context = LocalContext.current
 
@@ -101,7 +95,8 @@ fun SettingsScreen(
                     .padding(horizontal = 10.dp, vertical = 5.dp)
             ) {
 
-                SettingsItem(title = R.string.app_lanuage,
+                SettingsItem(
+                    title = R.string.app_lanuage,
                     description = if (Locale.getDefault().language.contains(userPreference.languageCode)) stringResource(
                         R.string.system_default
                     ) else findLanguageByCode(userPreference.languageCode).languageName,
@@ -115,10 +110,12 @@ fun SettingsScreen(
                     SettingsItem(
                         title = R.string.dynamic_color,
                         description =
-                        if (userPreference.shouldShowDynamicColor) stringResource(R.string.on).uppercase()
-                        else stringResource(R.string.off).uppercase(),
+                            if (userPreference.shouldShowDynamicColor) stringResource(R.string.on).uppercase()
+                            else stringResource(R.string.off).uppercase(),
                         icon = R.drawable.dynamic_color,
-                        onClick = settingViewModel::updateDynamicDialog
+                        onClick = {
+                            settingViewModel.onEvent(SettingEvent.ToggleDynamicDialog)
+                        }
                     )
 
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 10.dp))
@@ -133,7 +130,9 @@ fun SettingsScreen(
                         AppMode.DEFAULT -> stringResource(R.string.system_default)
                     },
                     icon = R.drawable.app_mode,
-                    onClick = settingViewModel::updateAppModeDialog
+                    onClick = {
+                        settingViewModel.onEvent(SettingEvent.UpdateAppMode(userPreference.appMode))
+                    }
                 )
             }
 
@@ -170,13 +169,15 @@ fun SettingsScreen(
                     description = null,
                     icon = R.drawable.share_app_icon,
                     onClick = {})
+
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 10.dp))
+
                 SettingsItem(
                     title = R.string.rate_us,
                     description = null,
                     icon = R.drawable.rate_us_icon,
                     onClick = {
-                        showRateUsDialog = true
+                        settingViewModel.onEvent(SettingEvent.ToggleRateUsDialog)
                     })
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 10.dp))
                 SettingsItem(
@@ -194,47 +195,51 @@ fun SettingsScreen(
         }
     }
 
-    if (showRateUsDialog) {
-        RateUsDialog(modifier = Modifier,
+    if (state.showRateUsDialog) {
+        RateUsDialog(
+            modifier = Modifier,
             onDismiss = {
-                showRateUsDialog = false
+                settingViewModel.onEvent(SettingEvent.ToggleRateUsDialog)
             },
             onRating = { userRating ->
-                showRateUsDialog = false
-                userRating.debug("SettingsScreen")
+                settingViewModel.onEvent(SettingEvent.ToggleRateUsDialog)
                 context.rateUs(activity)
             }
         )
     }
 
-    if (showDynamicDialog) {
+    if (state.showDynamicDialog) {
         DynamicColorDialog(
             modifier = Modifier,
             shouldShowDynamicColor = userPreference.shouldShowDynamicColor,
-            onDismissRequest = settingViewModel::updateDynamicDialog,
+            onDismissRequest = {
+                settingViewModel.onEvent(SettingEvent.ToggleDynamicDialog)
+            },
             onEnabled = {
                 with(settingViewModel) {
-                    updateDynamicColor(true)
-                    updateDynamicDialog()
+                    onEvent(SettingEvent.UpdateDynamicColor(true))
+                    onEvent(SettingEvent.ToggleDynamicDialog)
                 }
             },
             onDisabled = {
                 with(settingViewModel) {
-                    updateDynamicColor(false)
-                    updateDynamicDialog()
+                    onEvent(SettingEvent.UpdateDynamicColor(false))
+                    onEvent(SettingEvent.ToggleDynamicDialog)
                 }
             }
         )
     }
 
-    if (showAppModeDialog) {
+    if (state.showAppModeDialog) {
         AppModeDialog(
             modifier = Modifier,
             appMode = userPreference.appMode,
-            onDismissRequest = settingViewModel::updateAppModeDialog,
+            onDismissRequest = {
+                settingViewModel.onEvent(SettingEvent.ToggleAppModeDialog)
+            },
             onSelect = {
-                settingViewModel.updateAppMode(it)
-                settingViewModel.updateAppModeDialog()
+                settingViewModel.onEvent(SettingEvent.UpdateAppMode(it))
+                settingViewModel.onEvent(SettingEvent.ToggleAppModeDialog)
             }
         )
     }

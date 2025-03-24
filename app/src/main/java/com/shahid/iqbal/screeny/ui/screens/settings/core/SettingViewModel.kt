@@ -8,7 +8,23 @@ import com.shahid.iqbal.screeny.ui.screens.settings.utils.AppMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+
+data class SettingScreenState(
+    var showDynamicDialog: Boolean = false,
+    var showAppModeDialog: Boolean = false,
+    var showRateUsDialog: Boolean = false
+)
+
+sealed interface SettingEvent {
+    data object ToggleDynamicDialog : SettingEvent
+    data object ToggleAppModeDialog : SettingEvent
+    data class UpdateDynamicColor(val isDynamicColor: Boolean) : SettingEvent
+    data class UpdateAppMode(val appMode: AppMode) : SettingEvent
+    data object ToggleRateUsDialog : SettingEvent
+}
 
 class SettingViewModel(private val preferenceRepo: UserPreferenceRepo) : ViewModel() {
 
@@ -18,30 +34,39 @@ class SettingViewModel(private val preferenceRepo: UserPreferenceRepo) : ViewMod
         initialValue = UserPreference()
     )
 
-    var shouldShowDynamicDialog = MutableStateFlow<Boolean>(false)
-        private set
-
-    var shouldShowAppModeDialog = MutableStateFlow<Boolean>(false)
-        private set
+    private val _state = MutableStateFlow(SettingScreenState())
+    var state = _state.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), SettingScreenState())
 
 
-    fun updateDynamicColor(isDynamicColor: Boolean) {
-        viewModelScope.launch {
-            preferenceRepo.updateDynamicColor(isDynamicColor)
+    fun onEvent(event: SettingEvent) {
+        when (event) {
+            SettingEvent.ToggleAppModeDialog -> {
+                _state.update { it.copy(showAppModeDialog = !it.showAppModeDialog) }
+            }
+
+            SettingEvent.ToggleDynamicDialog -> {
+                _state.update { it.copy(showDynamicDialog = !it.showDynamicDialog) }
+            }
+
+            SettingEvent.ToggleRateUsDialog -> {
+                _state.update { it.copy(showRateUsDialog = !it.showRateUsDialog) }
+            }
+
+            is SettingEvent.UpdateDynamicColor -> {
+                viewModelScope.launch {
+                    preferenceRepo.updateDynamicColor(event.isDynamicColor)
+                }
+            }
+
+            is SettingEvent.UpdateAppMode -> {
+                viewModelScope.launch {
+                    preferenceRepo.updateAppMode(event.appMode)
+                }
+            }
+
+
         }
     }
 
-    fun updateAppMode(appMode: AppMode) {
-        viewModelScope.launch {
-            preferenceRepo.updateAppMode(appMode)
-        }
-    }
 
-    fun updateDynamicDialog() {
-        shouldShowDynamicDialog.value = shouldShowDynamicDialog.value.not()
-    }
-
-    fun updateAppModeDialog() {
-        shouldShowAppModeDialog.value = shouldShowAppModeDialog.value.not()
-    }
 }

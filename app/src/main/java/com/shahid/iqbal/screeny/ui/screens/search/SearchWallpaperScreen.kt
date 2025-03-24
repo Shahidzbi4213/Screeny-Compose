@@ -172,7 +172,9 @@ private fun RecentSearches(
 
 @Composable
 fun ShowWallpapers(
-    wallpapers: LazyPagingItems<Wallpaper>, imageLoader: ImageLoader, onWallpaperClick: (wallpaper: Wallpaper, items: List<Wallpaper>) -> Unit
+    wallpapers: LazyPagingItems<Wallpaper>,
+    imageLoader: ImageLoader,
+    onWallpaperClick: (wallpaper: Wallpaper, items: List<Wallpaper>) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),

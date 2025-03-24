@@ -83,14 +83,13 @@ fun SharedTransitionScope.FavouriteDetailScreen(
 
 
     /** Dialog display on apply button press*/
-    if (uiState.showDialog) {
-        if (uiState.wallpaperDrawable != null) {
-            WallpaperApplyDialog(
-                wallpaper = uiState.wallpaperDrawable,
-                onDismissRequest = {
-                    detailVm.onEvent(DetailScreenEvents.ToggleDialog(false))
-                })
-        }
+    if (uiState.showDialog && uiState.wallpaperDrawable != null) {
+        WallpaperApplyDialog(
+            wallpaper = uiState.wallpaperDrawable,
+            onDismissRequest = {
+                detailVm.onEvent(DetailScreenEvents.ToggleDialog(false))
+            })
+
     }
 }
 
