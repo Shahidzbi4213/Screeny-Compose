@@ -43,12 +43,12 @@ class ActionViewModel(
         }
     }
 
-    private fun addOrRemove(wallpaper: CommonWallpaperEntity) {
+    fun addOrRemove(wallpaper: CommonWallpaperEntity) {
         viewModelScope.launch { favouriteRepo.addOrRemove(wallpaper) }
     }
 
 
-    private fun downloadWallpaper(url: String) {
+    internal fun downloadWallpaper(url: String) {
         downloader.downloadFile(url)
     }
 }

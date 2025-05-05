@@ -1,14 +1,9 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlinx.serialization)
-
-
 }
 
 android {
@@ -35,11 +30,6 @@ android {
             useSupportLibrary = true
         }
 
-        val prop = Properties().apply {
-            load(FileInputStream(File(rootProject.rootDir, "local.properties")))
-        }
-        val apiKey = prop.getProperty("api_key")
-        buildConfigField("String", "API_KEY", apiKey)
 
         resourceConfigurations += mutableSetOf(
             "en", "ar", "ru", "in", "bn", "hi", "uk",
@@ -82,6 +72,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    ndkVersion = "27.0.12077973"
+
+    externalNativeBuild {
+        cmake {
+            path = File("src/main/cpp/CMakeLists.txt")
+        }
+    }
 
 }
 
@@ -116,6 +113,6 @@ dependencies {
 
     //Navigation Library
     implementation(libs.compose.navigation)
-    
+
 
 }

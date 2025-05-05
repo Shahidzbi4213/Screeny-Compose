@@ -16,3 +16,14 @@ local.properties
 
 /gradle.properties
 *.apk
+
+*.cpp
+*.hpp
+*.h
+*.cc
+*.cxx
+*.hh
+
+.dm
+*log
+CMakeLists.txt

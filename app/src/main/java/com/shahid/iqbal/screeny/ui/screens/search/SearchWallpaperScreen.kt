@@ -147,7 +147,9 @@ private fun RecentSearches(
             ) {
                 Text(
                     text = stringResource(id = R.string.recent_searchs),
-                    fontFamily = screenyFontFamily, style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant), modifier = Modifier.weight(1f)
+                    fontFamily = screenyFontFamily,
+                    style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
+                    modifier = Modifier.weight(1f)
                 )
 
                 TextButton(onClick = clearAll) {
@@ -160,7 +162,9 @@ private fun RecentSearches(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(vertical = 10.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(15.dp)
+                .padding(vertical = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
 
             items(recentSearches) {

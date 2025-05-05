@@ -37,7 +37,7 @@ class SearchViewModel(
     private val _searchState = MutableStateFlow(SearchState())
     val searchState: StateFlow<SearchState> = _searchState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), SearchState())
 
-    val recentSearches = repo.recentSearches.stateIn(viewModelScope, SharingStarted.WhileSubscribed(3000), emptyList())
+    val recentSearches = repo.recentSearches.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun searchWallpapers(query: String) = searchRepo.getSearchWallpapers(query).flow.cachedIn(viewModelScope)
 

@@ -35,6 +35,7 @@ fun shimmerBrush(showShimmer: Boolean = true, targetValue: Float = 1000f): Brush
             label = "Shimmer"
         )
 
+
         Brush.linearGradient(
             colors = shimmerColors,
             start = Offset.Zero,
