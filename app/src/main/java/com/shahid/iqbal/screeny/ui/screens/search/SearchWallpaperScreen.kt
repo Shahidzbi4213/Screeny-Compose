@@ -47,16 +47,15 @@ import com.shahid.iqbal.screeny.ui.screens.components.LoadingPlaceHolder
 import com.shahid.iqbal.screeny.ui.screens.components.WallpaperItem
 import com.shahid.iqbal.screeny.ui.theme.screenyFontFamily
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchedWallpaperScreen(
     onNavigateBack: () -> Unit,
-    imageLoader: ImageLoader,
     searchViewModel: SearchViewModel = koinViewModel(),
     onWallpaperClick: (Wallpaper, List<Wallpaper>) -> Unit,
 ) {
-
 
     val state by searchViewModel.searchState.collectAsStateWithLifecycle()
     val recentSearches by searchViewModel.recentSearches.collectAsStateWithLifecycle()
@@ -65,6 +64,7 @@ fun SearchedWallpaperScreen(
     val localKeyboard = LocalSoftwareKeyboardController.current
     val localFocusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
+    val imageLoader = koinInject<ImageLoader>()
 
 
     Column(

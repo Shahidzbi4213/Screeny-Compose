@@ -5,7 +5,6 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -21,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.shahid.iqbal.screeny.R
 
 
@@ -40,7 +38,6 @@ fun SearchField(
 ) {
     val modifierConfig = modifier
         .searchFieldModifier(isExpanded, focusRequester)
-        .padding(horizontal = 10.dp)
 
     InputField(
         query = searchQuery,

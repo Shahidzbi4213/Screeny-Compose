@@ -84,13 +84,13 @@ fun ScreenyApp() {
 
 
     Scaffold(
-        bottomBar = { if (canShowBottomBar) BottomNavigationBar(navController) }, topBar = {
+        bottomBar = { if (canShowBottomBar) BottomNavigationBar(navController) },
+        topBar = {
             if (canShowTopBar) {
                 val title = titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
                 TopBar(title = title) { navController.navigate(Routs.SearchedWallpaper) }
             }
         }, modifier = Modifier.fillMaxSize(),
-
         contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
 
