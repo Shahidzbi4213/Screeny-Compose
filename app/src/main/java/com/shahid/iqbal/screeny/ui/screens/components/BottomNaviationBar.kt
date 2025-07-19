@@ -8,13 +8,11 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.shahid.iqbal.screeny.ui.routs.IconType
 import com.shahid.iqbal.screeny.ui.routs.bottomNavigationItems
 
 @Composable
@@ -27,7 +25,7 @@ fun BottomNavigationBar(navController: NavHostController) {
             .fillMaxWidth()
             .wrapContentHeight(),
 
-    ) {
+        ) {
         bottomNavigationItems.forEach { bottomNavItem ->
             val isSelected = currentDestination?.hierarchy?.any { it.route == bottomNavItem.route::class.qualifiedName } == true
 
@@ -43,26 +41,10 @@ fun BottomNavigationBar(navController: NavHostController) {
                     }
                 },
                 icon = {
-                    when (bottomNavItem.icon) {
-                        is IconType.Drawable -> {
-                            Icon(
-                                painter = painterResource(
-                                    id = if (isSelected && bottomNavItem.selectedIcon is IconType.Drawable)
-                                        bottomNavItem.selectedIcon.iconRes
-                                    else bottomNavItem.icon.iconRes
-                                ),
-                                contentDescription = stringResource(id = bottomNavItem.name),
-                            )
-                        }
-                        is IconType.Vector -> {
-                            Icon(
-                                imageVector = if (isSelected && bottomNavItem.selectedIcon is IconType.Vector)
-                                    bottomNavItem.selectedIcon.icon
-                                else bottomNavItem.icon.icon,
-                                contentDescription = stringResource(id = bottomNavItem.name),
-                            )
-                        }
-                    }
+                    Icon(
+                        imageVector = if (isSelected) bottomNavItem.selectedIcon else bottomNavItem.icon,
+                        contentDescription = stringResource(id = bottomNavItem.name),
+                    )
                 },
                 alwaysShowLabel = false,
             )

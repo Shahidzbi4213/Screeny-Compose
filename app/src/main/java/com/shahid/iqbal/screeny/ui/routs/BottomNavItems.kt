@@ -1,12 +1,13 @@
 package com.shahid.iqbal.screeny.ui.routs
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.Keep
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
@@ -14,31 +15,19 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.shahid.iqbal.screeny.R
 
-sealed interface IconType {
-
-    @Stable
-    @Keep
-    data class Vector(val icon: ImageVector) : IconType
-
-    @Stable
-    @Keep
-    data class Drawable(@DrawableRes val iconRes: Int) : IconType
-}
-
-
 @Stable
 @Keep
-data class BottomNavRoutes(@StringRes val name: Int, val route: Routs, val icon: IconType, val selectedIcon: IconType)
+data class BottomNavRoutes(@StringRes val name: Int, val route: Routs, val icon: ImageVector, val selectedIcon: ImageVector)
 
 val bottomNavigationItems = listOf(
     BottomNavRoutes(
-        name = R.string.home, route = Routs.Home, icon = IconType.Vector(Icons.Outlined.Home), selectedIcon = IconType.Vector(Icons.Filled.Home)
+        name = R.string.home, route = Routs.Home, icon = Icons.Outlined.Home, selectedIcon = Icons.Filled.Home
     ), BottomNavRoutes(
-        name = R.string.category, route = Routs.Categories, icon = IconType.Drawable(R.drawable.category), selectedIcon = IconType.Drawable(R.drawable.category_filled)
+        name = R.string.category, route = Routs.Categories, icon = Icons.Outlined.Category, selectedIcon = Icons.Filled.Category
     ), BottomNavRoutes(
-        name = R.string.favourite, route = Routs.Favourite, icon = IconType.Vector(Icons.Outlined.FavoriteBorder), selectedIcon = IconType.Vector(Icons.Filled.Favorite)
+        name = R.string.favourite, route = Routs.Favourite, icon = Icons.Outlined.FavoriteBorder, selectedIcon = Icons.Filled.Favorite
     ), BottomNavRoutes(
-        name = R.string.settings, route = Routs.Settings, icon = IconType.Vector(Icons.Outlined.Settings), selectedIcon = IconType.Vector(Icons.Filled.Settings)
+        name = R.string.settings, route = Routs.Settings, icon = Icons.Outlined.Settings, selectedIcon = Icons.Filled.Settings
     )
 )
 
