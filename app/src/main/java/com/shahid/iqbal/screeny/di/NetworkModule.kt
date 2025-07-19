@@ -24,6 +24,11 @@ val networkModule = module {
 
         HttpClient(Android) {
 
+            engine {
+                connectTimeout = TIME_OUT
+                socketTimeout = TIME_OUT
+            }
+
             install(ContentNegotiation) {
                 json(Json {
                     prettyPrint = true
@@ -31,10 +36,6 @@ val networkModule = module {
                     ignoreUnknownKeys = true
                 })
 
-                engine {
-                    connectTimeout = TIME_OUT
-                    socketTimeout = TIME_OUT
-                }
             }
 
             if (BuildConfig.DEBUG) {

@@ -131,7 +131,7 @@ fun SettingsScreen(
                     },
                     icon = R.drawable.app_mode,
                     onClick = {
-                        settingViewModel.onEvent(SettingEvent.UpdateAppMode(userPreference.appMode))
+                        settingViewModel.onEvent(SettingEvent.ToggleAppModeDialog)
                     }
                 )
             }

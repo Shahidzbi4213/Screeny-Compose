@@ -14,7 +14,6 @@ import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

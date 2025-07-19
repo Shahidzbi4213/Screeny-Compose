@@ -16,13 +16,13 @@ android {
         }
     }
     namespace = "com.shahid.iqbal.screeny"
-    compileSdk = 35
+    compileSdk = 36
 
 
     defaultConfig {
         applicationId = "com.wallpapers.screeny"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -58,7 +58,20 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions { jvmTarget = "17" }
+    kotlin {
+        jvmToolchain(17)
+
+        compilerOptions {
+            freeCompilerArgs.addAll(
+                listOf(
+                    "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3ExpressiveApi",
+                    "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                    "-XXLanguage:+PropertyParamAnnotationDefaultTargetMode"
+                )
+            )
+        }
+    }
+
 
     buildFeatures {
         compose = true
@@ -72,7 +85,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "28.1.13356709"
 
     externalNativeBuild {
         cmake {
@@ -89,7 +102,9 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose.essentials)
-    implementation(libs.androidx.material3)
+    implementation(libs.material.icons.extended)
+    implementation("androidx.compose.material3:material3:1.4.0-alpha18")
+
 
     //lifecycle-compose
     implementation(libs.androidx.lifecycle.runtime.compose.android)
@@ -113,6 +128,21 @@ dependencies {
 
     //Navigation Library
     implementation(libs.compose.navigation)
+}
 
+tasks.register("printVersionName") {
+    doLast {
+        println(android.defaultConfig.versionName)
+    }
+}
 
+fun String.runCommand(workingDir: File): String {
+    return ProcessBuilder(*split(" ").toTypedArray())
+        .directory(workingDir)
+        .redirectErrorStream(true)
+        .start()
+        .inputStream
+        .bufferedReader()
+        .readText()
+        .trim()
 }
