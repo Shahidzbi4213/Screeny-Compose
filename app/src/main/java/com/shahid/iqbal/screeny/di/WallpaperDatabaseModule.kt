@@ -24,11 +24,7 @@ val wallpaperDatabaseModule = module {
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     CoroutineScope(Dispatchers.IO).launch {
-
-                        val cursor = db.query("SELECT * FROM user_preference")
-                        if (!cursor.moveToNext()) {
                             db.execSQL("INSERT INTO user_preference (id, languageCode, appMode, shouldShowDynamicColor) VALUES (1, 'en', 0, 1)")
-                        }
                     }
                 }
             })

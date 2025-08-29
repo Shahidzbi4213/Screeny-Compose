@@ -1,8 +1,11 @@
 package com.shahid.iqbal.screeny.ui.core
 
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -12,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -58,7 +62,6 @@ fun ScreenyApp() {
 
     val navController = rememberNavController()
 
-
     var canShowBottomBar by rememberSaveable { mutableStateOf(false) }
     var canShowTopBar by rememberSaveable { mutableStateOf(false) }
     var category by rememberSaveable { mutableStateOf("") }
@@ -90,7 +93,10 @@ fun ScreenyApp() {
                 val title = titleMapper(stackEntry?.destination?.route?.substringAfterLast("."))
                 TopBar(title = title) { navController.navigate(Routs.SearchedWallpaper) }
             }
-        }, modifier = Modifier.fillMaxSize(),
+        }, modifier = Modifier
+            .fillMaxSize()
+            .then(if (LocalConfiguration.current.orientation == ORIENTATION_LANDSCAPE) Modifier.displayCutoutPadding() else Modifier)
+         ,
         contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
 
@@ -158,7 +164,6 @@ fun ScreenyApp() {
 
                 composable<Routs.SearchedWallpaper> {
                     SearchedWallpaperScreen(
-                        imageLoader = imageLoader,
                         onNavigateBack = navController::navigateUp,
                         onWallpaperClick = { wallpaper, list ->
                             wallpaperCLick(wallpaper, list, sharedWallpaperViewModel, navController)

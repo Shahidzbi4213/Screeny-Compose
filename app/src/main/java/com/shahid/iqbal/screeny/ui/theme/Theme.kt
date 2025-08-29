@@ -2,12 +2,10 @@ package com.shahid.iqbal.screeny.ui.theme
 
 import android.os.Build
 import androidx.activity.compose.LocalActivity
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -91,7 +89,6 @@ private val darkScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark,
 )
 
-@ExperimentalMaterial3ExpressiveApi
 @Composable
 fun ScreenyTheme(
     darkTheme: Boolean,
@@ -105,7 +102,7 @@ fun ScreenyTheme(
         }
 
         darkTheme -> darkScheme
-        else -> expressiveLightColorScheme()
+        else -> lightScheme
     }
 
     val view = LocalView.current

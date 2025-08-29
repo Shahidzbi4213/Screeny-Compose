@@ -1,7 +1,6 @@
 package com.shahid.iqbal.screeny.di
 
 import com.shahid.iqbal.screeny.BuildConfig
-import com.shahid.iqbal.screeny.NativeKeyProvider
 import com.shahid.iqbal.screeny.utils.Extensions.debug
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -51,7 +50,7 @@ val networkModule = module {
 
             install(DefaultRequest) {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
-                header(HttpHeaders.Authorization, NativeKeyProvider.getApiKey())
+                header(HttpHeaders.Authorization, BuildConfig.API_KEY)
             }
 
         }

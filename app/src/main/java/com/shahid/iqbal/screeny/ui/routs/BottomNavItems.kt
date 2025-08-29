@@ -4,10 +4,12 @@ import androidx.annotation.Keep
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Category
+import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Category
+import androidx.compose.material.icons.outlined.Dashboard
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
@@ -21,7 +23,7 @@ data class BottomNavRoutes(@StringRes val name: Int, val route: Routs, val icon:
 
 val bottomNavigationItems = listOf(
     BottomNavRoutes(
-        name = R.string.home, route = Routs.Home, icon = Icons.Outlined.Home, selectedIcon = Icons.Filled.Home
+        name = R.string.home, route = Routs.Home, icon = Icons.Outlined.Dashboard, selectedIcon = Icons.Filled.Dashboard
     ), BottomNavRoutes(
         name = R.string.category, route = Routs.Categories, icon = Icons.Outlined.Category, selectedIcon = Icons.Filled.Category
     ), BottomNavRoutes(

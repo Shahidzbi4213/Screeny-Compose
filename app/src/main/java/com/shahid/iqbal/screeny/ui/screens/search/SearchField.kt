@@ -48,7 +48,7 @@ fun SearchField(
                 saveSearchQuery(searchQuery)
             }
         },
-        expanded = false,
+        expanded = isExpanded,
         onExpandedChange = onExpandChange,
         placeholder = {
             Text(stringResource(id = R.string.search_wallpaper))
