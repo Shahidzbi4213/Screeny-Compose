@@ -16,11 +16,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.screeny.data.local.dao.FavouriteWallpaperDao
 import com.google.screeny.ui.components.BottomNavigationBar
 import com.google.screeny.ui.components.TopBar
 import com.google.screeny.ui.composables.ManageBarVisibility
@@ -29,6 +31,7 @@ import com.google.screeny.ui.routs.Routs
 import com.google.screeny.ui.screens.splash.SplashScreen
 import com.google.screeny.ui.theme.ScreenyTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -40,6 +43,10 @@ fun App(modifier: Modifier = Modifier) {
     var canShowTopBar by rememberSaveable { mutableStateOf(false) }
     var category by rememberSaveable { mutableStateOf("") }
     val stackEntry by navController.currentBackStackEntryAsState()
+
+    val dao = koinInject<FavouriteWallpaperDao>()
+    val favourites by dao.getAllFavourites().collectAsStateWithLifecycle(emptyList())
+
 
     ManageBarVisibility(
         currentEntry = { stackEntry },
@@ -80,8 +87,14 @@ fun App(modifier: Modifier = Modifier) {
                     }
 
                     composable<Routs.Home>() {
+
                         Box() {
-                            Text("i am home")
+
+                            if (favourites.isEmpty()) {
+                                Text("No Favourites found")
+                            }else {
+                                Text("Favourites found")
+                            }
                         }
                     }
 
