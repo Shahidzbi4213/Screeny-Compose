@@ -25,7 +25,7 @@ fun WallpaperItem(
     modifier: Modifier = Modifier,
     wallpaper: String,
     isForApply: Boolean = false,
-    getPainter: (Painter) -> Unit,
+    getPainter: (Painter) -> Unit = {},
     onWallpaperClick: (String) -> Unit = {}
 ) {
 

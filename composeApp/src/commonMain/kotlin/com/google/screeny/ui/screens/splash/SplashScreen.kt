@@ -42,7 +42,7 @@ import screeny.composeapp.generated.resources.app_name
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
-    splashViewModel: SplashViewModel = koinViewModel(),
+    splashViewModel: SplashViewModel = viewModel{ SplashViewModel() },
     onProgressFinish: () -> Unit
 ) {
 
