@@ -32,6 +32,7 @@ import com.google.screeny.ui.components.SplashProgressBar
 import com.google.screeny.ui.theme.getScreenyFontFamily
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import screeny.composeapp.generated.resources.Res
 import screeny.composeapp.generated.resources.app_logo
 import screeny.composeapp.generated.resources.app_name
@@ -41,7 +42,7 @@ import screeny.composeapp.generated.resources.app_name
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
-    splashViewModel: SplashViewModel = viewModel{ SplashViewModel() },
+    splashViewModel: SplashViewModel = koinViewModel(),
     onProgressFinish: () -> Unit
 ) {
 
