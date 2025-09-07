@@ -9,6 +9,8 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.androidx.room)
+    alias(libs.plugins.kotzilla)
+
 
 
 
@@ -17,7 +19,7 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
 
@@ -28,8 +30,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            // Required when using NativeSQLiteDriver
-            linkerOpts.add("-lsqlite3")
+
         }
     }
 
@@ -70,6 +71,10 @@ kotlin {
             //Room
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+
+            //Kotzilla
+            implementation(libs.kotzilla.sdk)
+
 
         }
 
@@ -130,9 +135,8 @@ dependencies {
     add("kspIosSimulatorArm64", libs.koin.ksp.compiler)
 
     add("kspAndroid", libs.androidx.room.compiler)
-    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
     add("kspIosArm64", libs.androidx.room.compiler)
-
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
 
 }
 // Trigger Common Metadata Generation from Native tasks
@@ -142,7 +146,4 @@ tasks.matching { it.name.startsWith("ksp") && it.name != "kspCommonMainKotlinMet
 
 room {
     schemaDirectory("$projectDir/schemas")
-}
-ksp {
-    arg("KOIN_DEFAULT_MODULE", "true")
 }
