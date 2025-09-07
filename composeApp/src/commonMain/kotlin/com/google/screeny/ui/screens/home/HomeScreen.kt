@@ -1,6 +1,6 @@
 package com.google.screeny.ui.screens.home
 
-import androidx.compose.foundation.layout.Arrangement
+/*import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -70,6 +70,6 @@ fun HomeScreen(
     }
 
 
-}
+}*/
 
 

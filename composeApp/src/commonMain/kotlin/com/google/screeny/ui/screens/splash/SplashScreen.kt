@@ -26,7 +26,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.screeny.core.platform.BackHandler
 import com.google.screeny.ui.components.SplashProgressBar
 import com.google.screeny.ui.theme.getScreenyFontFamily
@@ -42,7 +41,7 @@ import screeny.composeapp.generated.resources.app_name
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
-    splashViewModel: SplashViewModel = viewModel{ SplashViewModel() },
+    splashViewModel: SplashViewModel = koinViewModel(),
     onProgressFinish: () -> Unit
 ) {
 

@@ -23,6 +23,9 @@ pager3Version = "3.4.0-alpha03"
 room = "2.7.2"
 sqlite = "2.5.2"
 
+kotzilla = "1.2.1"
+
+
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
@@ -58,6 +61,10 @@ androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.r
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
+#Kotzilla
+kotzilla-sdk = { group = "io.kotzilla", name = "kotzilla-sdk", version.ref = "kotzilla" }
+
+
 [bundles]
 koin-di = ["koin-core","koin-compose","koin-compose-viewmodel","koin-compose-viewmodel-navigation"]
 ktor-networking = ["ktor-client-core","ktor-client-logging","ktor-content-negotiation","ktor-client-serialization"]
@@ -72,3 +79,5 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 androidx-room = { id = "androidx.room", version.ref = "room" }
+kotzilla = { id = "io.kotzilla.kotzilla-plugin", version.ref = "kotzilla" }
+
