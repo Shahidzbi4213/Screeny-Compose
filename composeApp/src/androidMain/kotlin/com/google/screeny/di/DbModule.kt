@@ -12,7 +12,5 @@ class DbModule() {
 
 
     @Single
-    fun provideDatabaseBuilder(context: Context): RoomDatabase.Builder<ScreenyDatabase> =
-        getDatabaseBuilder(context)
-
+    fun provideDatabaseBuilder(context: Context): RoomDatabase.Builder<ScreenyDatabase> = getDatabaseBuilder(context)
 }
